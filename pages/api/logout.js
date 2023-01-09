@@ -1,7 +1,16 @@
 import { removeTokenCookie } from "../../lib/auth-cookies";
 
 export default async function logout(req, res) {
-    removeTokenCookie(res)
-    res.writeHead(302, { Location: '/' })
-    res.end()
+  const role = req.query?.role;
+  const redirectPath = req.query?.redirect;
+  if (role !== "admin" && role !== "user") {
+    console.log(`Role should be 'admin' or 'user' but gets: ${role}`);
+    res.writeHead(401, { Location: "/test" });
+    res.end();
+    return;
+  }
+  const isAdmin = role === "admin";
+  removeTokenCookie(res, isAdmin);
+  res.writeHead(302, { Location: redirectPath ? `/${redirectPath}` : "/test" });
+  res.end();
 }
