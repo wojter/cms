@@ -5,6 +5,7 @@ import Searchbar from "./searchbar";
 import TableCell from "./tableCell";
 import { useToast } from "./providers/toastProvider";
 import { useRefetch } from "./providers/refetchProvider";
+import { useData } from "./providers/dataProvider";
 
 const Table = ({
   title,
@@ -15,6 +16,7 @@ const Table = ({
   dataMapper,
   topButtons,
   actionButtons,
+  links = null,
 }) => {
   const [data, setData] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
@@ -27,10 +29,18 @@ const Table = ({
 
   const { setToast } = useToast();
   const { toRefetch, refetch, refetchReset } = useRefetch();
+  const { additionalData, setAdditionalData } = useData();
 
   useEffect(() => {
     if (toRefetch) {
-      if (toRefetch === "users") {
+      if (
+        toRefetch === "users" ||
+        toRefetch === "posts" ||
+        toRefetch === "posts/categories" ||
+        toRefetch === "comments" ||
+        toRefetch === "reactions" ||
+        toRefetch === "reactions/categories"
+      ) {
         fetchData();
         refetchReset();
       }
@@ -45,16 +55,24 @@ const Table = ({
     try {
       setDataLoading(true);
       let url = "";
-
+      let doSendAdditionalData = false;
+      if (apiPath === "posts" || apiPath === "reactions") {
+        doSendAdditionalData = true;
+      }
       if (searchTerm) {
         url = `/api/admin/${apiPath}?search=${searchTerm}&page=${pagination.currentPage}&limit=${pagination.limit}`;
       } else {
         url = `/api/admin/${apiPath}?page=${pagination.currentPage}&limit=${pagination.limit}`;
       }
+      if (doSendAdditionalData) {
+        url += `&additional_data=${apiPath}`;
+      }
       const res = await fetch(url);
       if (res.status === 200) {
-        const { documents, currentPage, totalPages } = await res.json();
+        const { documents, currentPage, totalPages, additionalData } =
+          await res.json();
         setData(documents);
+        setAdditionalData(additionalData);
         setPagination({
           ...pagination,
           currentPage,
@@ -137,7 +155,8 @@ const Table = ({
                       key={idd}
                       text={cell}
                       type={headerTypes[idd]}
-                      id={idd}
+                      links={links}
+                      rowRaw={data[id]}
                     />
                   ))}
                   <TableFL.Cell className="flex flex-row justify-end gap-4">

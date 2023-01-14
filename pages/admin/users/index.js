@@ -8,8 +8,8 @@ import {
 import Breadcrumb from "../../../components/admin/breadcrumb";
 import Layout from "../../../components/admin/layout";
 import ModalNewUser from "../../../components/admin/modals/modalNewUser";
-import ModalEditUserProfile from "../../../components/admin/modals/modalEditUserProfile";
-import ModalDeleteUserProfile from "../../../components/admin/modals/modalDeleteUserProfile";
+import ModalEditUser from "../../../components/admin/modals/modalEditUser";
+import ModalDeleteUser from "../../../components/admin/modals/modalDeleteUser";
 import Table from "../../../components/admin/table";
 import { Button } from "flowbite-react";
 import useModal from "../../../components/admin/hooks/useModal";
@@ -82,7 +82,7 @@ const Users = () => {
         refetchName="users"
       />
       {deleteUserModalHook.data && (
-        <ModalDeleteUserProfile
+        <ModalDeleteUser
           user={deleteUserModalHook.data}
           isOpen={deleteUserModalHook.isOpen}
           toggleOpen={deleteUserModalHook.toggleOpen}
@@ -90,7 +90,7 @@ const Users = () => {
         />
       )}
       {editUserModalHook.data && (
-        <ModalEditUserProfile
+        <ModalEditUser
           user={editUserModalHook.data}
           isOpen={editUserModalHook.isOpen}
           toggleOpen={editUserModalHook.toggleOpen}

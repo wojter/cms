@@ -15,7 +15,7 @@ const Searchbar = ({ searchTerm, setSearchTerm, refetchName }) => {
         <input
           type="text"
           placeholder="Search..."
-          className="bg-gray-700 sm:rounded-l-lg border-gray-700 pl-12"
+          className="sm:rounded-l-lg pl-12 bg-gray-800 border border-gray-700 text-gray-400"
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);

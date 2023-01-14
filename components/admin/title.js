@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Router from "next/router";
 import React from "react";
 import { HiOutlineReply } from "react-icons/hi";
 
@@ -9,11 +10,19 @@ const Title = ({ text, returnPath, buttons }) => {
         <p className="text-4xl">{text}</p>
         {buttons()}
       </div>
-      <Link href={returnPath}>
+      <button
+        className="text-white w-8 hover:text-gray-300"
+        onClick={() => {
+          Router.back();
+        }}
+      >
+        <HiOutlineReply className="w-full h-full" />
+      </button>
+      {/* <Link href={returnPath}>
         <a className="text-white w-8 hover:text-gray-300">
           <HiOutlineReply className="w-full h-full" />
         </a>
-      </Link>
+      </Link> */}
     </div>
   );
 };
