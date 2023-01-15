@@ -3,25 +3,28 @@ import React, { Fragment } from "react";
 import { HiCheck, HiX } from "react-icons/hi";
 import Moment from "./moment";
 
-// Example from data
-// const formData = [
-//   ["ID", "_id", "string"],
-//   ["Email", "email", "string"],
-//   ["Username", "username", "string"],
-//   ["Is Admin", "is_admin", "bool"],
-//   ["Created", "created", "date"],
-// ];
-
 const Form = ({ formData, object, links = null }) => {
   return (
     <div className="grid grid-cols-[200px_1fr] gap-y-2">
       {formData.map(([label, key, type], id) => {
+
         let objectBase = object;
         if (Array.isArray(key)) {
           key.forEach((k) => {
-            objectBase = objectBase[k];
+            objectBase = objectBase?.[k];
           });
         }
+        if (!objectBase) {
+          return (
+            <Fragment key={id}>
+              <p className="text-gray-400">{label}</p>
+              <p className="text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">
+                No data
+              </p>
+            </Fragment>
+          );
+        }
+
         if (type.startsWith("string")) {
           return (
             <Fragment key={id}>

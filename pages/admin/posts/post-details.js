@@ -11,6 +11,9 @@ import useModal from "../../../components/admin/hooks/useModal";
 import { Spinner } from "flowbite-react";
 import Form from "../../../components/admin/form";
 import { useToast } from "../../../components/admin/providers/toastProvider";
+import TabsNoRedirect from "../../../components/admin/tabsNoRedirect";
+import CommentsTable from "../../../components/admin/tables/commentsTable";
+import ReactionsTable from "../../../components/admin/tables/reactionsTable";
 
 const PostDetails = () => {
   const [post, setPost] = useState(null);
@@ -141,6 +144,22 @@ const PostDetails = () => {
       ) : (
         <Form formData={formData} object={post} links={links} />
       )}
+
+      <TabsNoRedirect
+        titles={["Comments", "Reactions"]}
+        elements={[
+          <CommentsTable
+            title="Comments"
+            otherUrlOptions={`&filter=post_id:${postId}`}
+            columnsToOmit={["post"]}
+          />,
+          <ReactionsTable
+            title="Reactions"
+            otherUrlOptions={`&filter=post_id:${postId}`}
+            columnsToOmit={["post"]}
+          />,
+        ]}
+      />
     </Layout>
   );
 };

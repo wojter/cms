@@ -17,6 +17,7 @@ const Table = ({
   topButtons,
   actionButtons,
   links = null,
+  otherUrlOptions = null,
 }) => {
   const [data, setData] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
@@ -26,6 +27,7 @@ const Table = ({
     limit: 8,
   });
   const [searchTerm, setSearchTerm] = useState("");
+  const [totalDocumentNumber, setTotalDocumentNumber] = useState(null);
 
   const { setToast } = useToast();
   const { toRefetch, refetch, refetchReset } = useRefetch();
@@ -67,12 +69,21 @@ const Table = ({
       if (doSendAdditionalData) {
         url += `&additional_data=${apiPath}`;
       }
+      if (otherUrlOptions) {
+        url += otherUrlOptions;
+      }
       const res = await fetch(url);
       if (res.status === 200) {
-        const { documents, currentPage, totalPages, additionalData } =
-          await res.json();
+        const {
+          documents,
+          currentPage,
+          totalPages,
+          additionalData,
+          totalDocumentNumber,
+        } = await res.json();
         setData(documents);
         setAdditionalData(additionalData);
+        setTotalDocumentNumber(totalDocumentNumber);
         setPagination({
           ...pagination,
           currentPage,
@@ -103,9 +114,14 @@ const Table = ({
   return (
     <>
       <div className="flex flex-row justify-between items-end h-10">
-        <p className="text-4xl">{title}</p>
+        <div className="flex flex-row gap-2 items-end">
+          <p className="text-4xl">{title}</p>
+          {totalDocumentNumber && (
+            <p className="text-gray-500 text-xl">({totalDocumentNumber})</p>
+          )}
+        </div>
         <div className="flex flex-row items-center gap-4">
-          {topButtons()}
+          {topButtons && topButtons()}
           <Searchbar
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -160,7 +176,7 @@ const Table = ({
                     />
                   ))}
                   <TableFL.Cell className="flex flex-row justify-end gap-4">
-                    {actionButtons(data[id])}
+                    {actionButtons && actionButtons(data[id])}
                   </TableFL.Cell>
                 </TableFL.Row>
               ))}

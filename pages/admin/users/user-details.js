@@ -11,6 +11,10 @@ import useModal from "../../../components/admin/hooks/useModal";
 import { Spinner } from "flowbite-react";
 import Form from "../../../components/admin/form";
 import { useToast } from "../../../components/admin/providers/toastProvider";
+import PostsTable from "../../../components/admin/tables/postsTable";
+import CommentsTable from "../../../components/admin/tables/commentsTable";
+import ReactionsTable from "../../../components/admin/tables/reactionsTable";
+import TabsNoRedirect from "../../../components/admin/tabsNoRedirect";
 
 const UserDetails = () => {
   const [user, setUser] = useState(null);
@@ -109,6 +113,7 @@ const UserDetails = () => {
           refetchName="user"
         />
       )}
+
       <Breadcrumb
         paths={[
           ["Users", "/admin/users"],
@@ -127,6 +132,27 @@ const UserDetails = () => {
       ) : (
         <Form formData={formData} object={user} />
       )}
+
+      <TabsNoRedirect
+        titles={["Posts", "Comments", "Reactions"]}
+        elements={[
+          <PostsTable
+            title="Posts"
+            otherUrlOptions={`&filter=user_id:${userId}`}
+            columnsToOmit={["user"]}
+          />,
+          <CommentsTable
+            title="Comments"
+            otherUrlOptions={`&filter=user_id:${userId}`}
+            columnsToOmit={["user"]}
+          />,
+          <ReactionsTable
+            title="Reactions"
+            otherUrlOptions={`&filter=user_id:${userId}`}
+            columnsToOmit={["user"]}
+          />,
+        ]}
+      />
     </Layout>
   );
 };

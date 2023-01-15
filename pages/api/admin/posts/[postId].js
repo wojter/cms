@@ -1,5 +1,7 @@
 import Post from "../../../../models/Post";
 import User from "../../../../models/User";
+import Comment from "../../../../models/Comment";
+import Reaction from "../../../../models/Reaction";
 import PostCategory from "../../../../models/PostCategory";
 import dbConnect from "../../../../lib/db-connect";
 import { isAdminAuthenticated } from "../../../../lib/auth";
@@ -25,8 +27,9 @@ export default async function post(req, res) {
     if (req.method === "GET") {
       return res.status(200).send(post);
     } else if (req.method === "DELETE") {
+      await Comment.deleteMany({ post_id: post._id });
+      await Reaction.deleteMany({ post_id: post._id });
       await Post.deleteOne({ _id: post._id });
-      // TODO: usuwanie kaskadowe komentarzy i reakcji dotyczących tego posta
       return res.status(200).end();
     } else {
       return res.status(400).end(`Method '${req.method}' not allowed`);

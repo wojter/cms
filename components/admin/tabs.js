@@ -1,7 +1,6 @@
-import { Tabs as TabsFL } from "flowbite-react";
 import Link from "next/link";
 
-const Tabs = ({ tabs, active }) => {
+const Tabs = ({ active, tabs }) => {
   return (
     <div className="flex flex-row text-sm border-b border-gray-700">
       {tabs.map(([title, href], id) => (

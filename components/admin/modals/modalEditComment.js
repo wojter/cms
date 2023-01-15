@@ -48,8 +48,13 @@ const ModalEditComment = ({ comment, isOpen, toggleOpen, refetchName }) => {
     if (comment) {
       setUser(comment.user_id);
       setUserId(comment.user_id._id.toString());
-      setPost(comment.post_id);
-      setPostId(comment.post_id._id.toString());
+      if (comment.post_id) {
+        setPost(comment.post_id);
+        setPostId(comment.post_id._id.toString());
+      } else {
+        setPost(null);
+        setPostId("");
+      }
     }
   }, []);
 
@@ -65,6 +70,14 @@ const ModalEditComment = ({ comment, isOpen, toggleOpen, refetchName }) => {
         created: e.target["created"].value,
         modified: e.target["modified"].value,
       };
+      if (!body.user_id) {
+        setToast("Please provide user id", false);
+        return;
+      }
+      if (!body.post_id) {
+        setToast("Please provide post id", false);
+        return;
+      }
       const res = await fetch("/api/admin/comments/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
