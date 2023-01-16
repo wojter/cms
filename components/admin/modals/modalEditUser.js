@@ -10,7 +10,7 @@ import moment from "moment";
 import { useToast } from "../providers/toastProvider";
 import { useRefetch } from "../providers/refetchProvider";
 
-const ModalEditUserProfile = ({ user, isOpen, toggleOpen, refetchName }) => {
+const ModalEditUser = ({ user, isOpen, toggleOpen, refetchName }) => {
   const { setToast } = useToast();
   const { refetch } = useRefetch();
   const handleSubmit = async (e) => {
@@ -88,31 +88,25 @@ const ModalEditUserProfile = ({ user, isOpen, toggleOpen, refetchName }) => {
                   defaultChecked={user.is_admin}
                 />
                 <Label htmlFor="created" value="Created" />
-                <div className="flex flex-row gap-2 w-full">
-                  <TextInput
-                    id="created"
-                    name="created"
-                    type="datetime-local"
-                    className="w-full"
-                    defaultValue={moment(user.created).format(
-                      "YYYY-MM-DD HH:mm:ss"
-                    )}
-                    step={1}
-                  />
-                </div>
+                <TextInput
+                  id="created"
+                  name="created"
+                  type="datetime-local"
+                  defaultValue={moment(user.created).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                  )}
+                  step={1}
+                />
                 <Label htmlFor="modified" value="Last modified" />
-                <div className="flex flex-row gap-2 w-full">
-                  <TextInput
-                    id="modified"
-                    name="modified"
-                    type="datetime-local"
-                    className="w-full"
-                    defaultValue={moment(user.modified).format(
-                      "YYYY-MM-DD HH:mm:ss"
-                    )}
-                    step={1}
-                  />
-                </div>
+                <TextInput
+                  id="modified"
+                  name="modified"
+                  type="datetime-local"
+                  defaultValue={moment(user.modified).format(
+                    "YYYY-MM-DD HH:mm:ss"
+                  )}
+                  step={1}
+                />
               </div>
             </form>
           </ModalFL.Body>
@@ -128,4 +122,4 @@ const ModalEditUserProfile = ({ user, isOpen, toggleOpen, refetchName }) => {
   );
 };
 
-export default ModalEditUserProfile;
+export default ModalEditUser;

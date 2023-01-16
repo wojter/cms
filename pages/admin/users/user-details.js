@@ -4,13 +4,17 @@ import { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import { HiPencilAlt, HiTrash } from "react-icons/hi";
 import Title from "../../../components/admin/title";
-import ModalEditUserProfile from "../../../components/admin/modals/modalEditUserProfile";
+import ModalEditUser from "../../../components/admin/modals/modalEditUser";
+import ModalDeleteUser from "../../../components/admin/modals/modalDeleteUser";
 import { useRefetch } from "../../../components/admin/providers/refetchProvider";
 import useModal from "../../../components/admin/hooks/useModal";
 import { Spinner } from "flowbite-react";
 import Form from "../../../components/admin/form";
 import { useToast } from "../../../components/admin/providers/toastProvider";
-import ModalDeleteUserProfile from "../../../components/admin/modals/modalDeleteUserProfile";
+import PostsTable from "../../../components/admin/tables/postsTable";
+import CommentsTable from "../../../components/admin/tables/commentsTable";
+import ReactionsTable from "../../../components/admin/tables/reactionsTable";
+import TabsNoRedirect from "../../../components/admin/tabsNoRedirect";
 
 const UserDetails = () => {
   const [user, setUser] = useState(null);
@@ -94,7 +98,7 @@ const UserDetails = () => {
   return (
     <Layout active={"Users"}>
       {editUserModalHook.data && (
-        <ModalEditUserProfile
+        <ModalEditUser
           user={editUserModalHook.data}
           isOpen={editUserModalHook.isOpen}
           toggleOpen={editUserModalHook.toggleOpen}
@@ -102,21 +106,22 @@ const UserDetails = () => {
         />
       )}
       {deleteUserModalHook.data && (
-        <ModalDeleteUserProfile
+        <ModalDeleteUser
           user={deleteUserModalHook.data}
           isOpen={deleteUserModalHook.isOpen}
           toggleOpen={deleteUserModalHook.toggleOpen}
           refetchName="user"
         />
       )}
+
       <Breadcrumb
         paths={[
           ["Users", "/admin/users"],
-          ["User details", `/admin/users/user-details?id=${userId}`],
+          ["User Details", `/admin/users/user-details?id=${userId}`],
         ]}
       />
       <Title
-        text="User details"
+        text="User Details"
         buttons={titleButtons}
         returnPath="/admin/users"
       />
@@ -127,6 +132,27 @@ const UserDetails = () => {
       ) : (
         <Form formData={formData} object={user} />
       )}
+
+      <TabsNoRedirect
+        titles={["Posts", "Comments", "Reactions"]}
+        elements={[
+          <PostsTable
+            title="Posts"
+            otherUrlOptions={`&filter=user_id:${userId}`}
+            columnsToOmit={["user"]}
+          />,
+          <CommentsTable
+            title="Comments"
+            otherUrlOptions={`&filter=user_id:${userId}`}
+            columnsToOmit={["user"]}
+          />,
+          <ReactionsTable
+            title="Reactions"
+            otherUrlOptions={`&filter=user_id:${userId}`}
+            columnsToOmit={["user"]}
+          />,
+        ]}
+      />
     </Layout>
   );
 };

@@ -18,4 +18,40 @@
   .tooltip-details {
     @apply tooltip before:hover:content-['Details'];
   }
+  :invalid {
+    color: rgba(1, 163, 175, 1);
+  }
+
+  div[data-testid*="modal"] > div > div {
+    @apply rounded-xl dark:bg-gray-725;
+  }
+
+  .table_scroll th,
+  .table_scroll td {
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .table_scroll {
+    overflow-y: auto;
+    height: 60vh;
+  }
+  .table_scroll thead th {
+    position: sticky;
+    top: 0px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .table_scroll > div {
+    @apply sm:rounded-none;
+  }
+
+  #additional_header {
+    width: 0;
+    padding: 0;
+  }
 }
