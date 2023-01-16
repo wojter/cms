@@ -13,8 +13,7 @@ const PostList = ({ post, aspect, preloadImage }) => {
           className={`relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800   hover:scale-105 
           ${aspect === "landscape" ? "aspect-video" : "aspect-square"}`}
         >
-          {/* <Link href={`/post/${post.slug.current}`}> */}
-          <Link href={`/post/`+ post._id}>
+          <Link href={`/post/${post._id}`}>
             <a>
               {imageProps ? (
                 <Image
