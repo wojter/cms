@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { Modal as ModalFL } from "flowbite-react";
 import LookupTable from "../lookupTable";
 

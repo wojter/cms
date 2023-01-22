@@ -1,6 +1,6 @@
 import User from "../../../../models/User";
 import dbConnect from "../../../../lib/db-connect";
-import { getDocsWithPagination } from "../../../../lib/api-helpers/get-docs-with-pagination";
+import { getDocsWithPagination } from "../../../../lib/get-docs-with-pagination";
 import { isAdminAuthenticated } from "../../../../lib/auth";
 
 export default async function users(req, res) {

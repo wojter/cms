@@ -3,7 +3,7 @@ import Post from "../../../../models/Post";
 import User from "../../../../models/User";
 import ReactionCategory from "../../../../models/ReactionCategory";
 import dbConnect from "../../../../lib/db-connect";
-import { getDocsWithPagination } from "../../../../lib/api-helpers/get-docs-with-pagination";
+import { getDocsWithPagination } from "../../../../lib/get-docs-with-pagination";
 import { isAdminAuthenticated } from "../../../../lib/auth";
 
 export default async function reactions(req, res) {

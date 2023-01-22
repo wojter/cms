@@ -19,7 +19,7 @@ import { HiInformationCircle, HiTable, HiX } from "react-icons/hi";
 const ModalEditReaction = ({ reaction, isOpen, toggleOpen, refetchName }) => {
   const { setToast } = useToast();
   const { refetch } = useRefetch();
-  const { additionalData } = useData();
+  const { reactionCategories } = useData();
 
   const usersTableModalHook = useModal();
   const postsTableModalHook = useModal();
@@ -81,10 +81,7 @@ const ModalEditReaction = ({ reaction, isOpen, toggleOpen, refetchName }) => {
       }
     } catch (err) {
       console.log(err);
-      setToast(
-        "An unexpected error happened occurred while updating reaction",
-        false
-      );
+      setToast("An unexpected error occurred while updating reaction", false);
     }
   };
 
@@ -147,8 +144,8 @@ const ModalEditReaction = ({ reaction, isOpen, toggleOpen, refetchName }) => {
   };
 
   let values = [];
-  if (additionalData?.reactionCategories) {
-    values = additionalData.reactionCategories
+  if (reactionCategories) {
+    values = reactionCategories
       .filter((cat) => cat._id !== reaction.category_id._id)
       .map((category) => [category._id, category.name]);
     values = [[reaction.category_id._id, reaction.category_id.name], ...values];

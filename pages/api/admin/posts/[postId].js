@@ -25,7 +25,8 @@ export default async function post(req, res) {
     }
 
     if (req.method === "GET") {
-      return res.status(200).send(post);
+      const postCategories = await PostCategory.find();
+      return res.status(200).json({ post, postCategories });
     } else if (req.method === "DELETE") {
       await Comment.deleteMany({ post_id: post._id });
       await Reaction.deleteMany({ post_id: post._id });

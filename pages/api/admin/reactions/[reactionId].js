@@ -25,7 +25,8 @@ export default async function reaction(req, res) {
     }
 
     if (req.method === "GET") {
-      return res.status(200).send(reaction);
+      const reactionCategories = await ReactionCategory.find();
+      return res.status(200).json({reaction, reactionCategories});
     } else if (req.method === "DELETE") {
       await Reaction.deleteOne({ _id: reaction._id });
       return res.status(200).end();

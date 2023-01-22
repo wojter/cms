@@ -1,4 +1,10 @@
-import { HiUser, HiChatAlt, HiThumbUp, HiDocumentText } from "react-icons/hi";
+import {
+  HiUser,
+  HiChatAlt,
+  HiThumbUp,
+  HiDocumentText,
+  HiPhotograph,
+} from "react-icons/hi";
 
 import Layout from "../../components/admin/layout";
 import Breadcrumb from "../../components/admin/breadcrumb";
@@ -36,7 +42,7 @@ const AdminHome = () => {
     <Layout active={"Dashboard"}>
       <p className="text-4xl">Dashboard</p>
       <Breadcrumb paths={[]} />
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 flex-wrap">
         <Card
           href={"/admin/users"}
           icon={HiUser}
@@ -67,6 +73,14 @@ const AdminHome = () => {
           number={numbers?.reactions}
           label={"Reactions"}
           color={"orange"}
+        />
+
+        <Card
+          href={"/admin/images"}
+          icon={HiPhotograph}
+          number={numbers?.images}
+          label={"Images"}
+          color={"yellow"}
         />
       </div>
     </Layout>

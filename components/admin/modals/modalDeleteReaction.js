@@ -32,10 +32,7 @@ const ModalDeleteReaction = ({ reaction, isOpen, toggleOpen, refetchName }) => {
       }
     } catch (err) {
       console.log(err);
-      setToast(
-        "An unexpected error happened occurred while deleting reaction",
-        false
-      );
+      setToast("An unexpected error occurred while deleting reaction", false);
     }
   };
   return (

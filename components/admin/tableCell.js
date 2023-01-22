@@ -52,6 +52,18 @@ const TableCell = ({ text, type, links, rowRaw }) => {
         </Link>
       </TableFL.Cell>
     );
+  } else if (type.startsWith("image")) {
+    return (
+      <TableFL.Cell className="text-white whitespace-nowrap overflow-hidden text-ellipsis">
+        <img src={text} alt={text} />
+      </TableFL.Cell>
+    );
+  } else {
+    return (
+      <TableFL.Cell className="text-white whitespace-nowrap overflow-hidden text-ellipsis">
+        {text}
+      </TableFL.Cell>
+    );
   }
 };
 

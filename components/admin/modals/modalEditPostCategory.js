@@ -39,7 +39,7 @@ const ModalEditPostCategory = ({
     } catch (err) {
       console.log(err);
       setToast(
-        "An unexpected error happened occurred while updating post category",
+        "An unexpected error occurred while updating post category",
         false
       );
     }

@@ -1,6 +1,6 @@
 import ReactionCategory from "../../../../../models/ReactionCategory";
 import dbConnect from "../../../../../lib/db-connect";
-import { getDocsWithPagination } from "../../../../../lib/api-helpers/get-docs-with-pagination";
+import { getDocsWithPagination } from "../../../../../lib/get-docs-with-pagination";
 import { isAdminAuthenticated } from "../../../../../lib/auth";
 
 export default async function reactionCategories(req, res) {

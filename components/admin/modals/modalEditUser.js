@@ -42,7 +42,7 @@ const ModalEditUser = ({ user, isOpen, toggleOpen, refetchName }) => {
     } catch (err) {
       console.log(err);
       setToast(
-        "An unexpected error happened occurred while updating user profile",
+        "An unexpected error occurred while updating user profile",
         false
       );
     }

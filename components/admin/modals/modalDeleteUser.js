@@ -33,7 +33,7 @@ const ModalDeleteUser = ({ user, isOpen, toggleOpen, refetchName }) => {
     } catch (err) {
       console.log(err);
       setToast(
-        "An unexpected error happened occurred while deleting user account",
+        "An unexpected error occurred while deleting user account",
         false
       );
     }

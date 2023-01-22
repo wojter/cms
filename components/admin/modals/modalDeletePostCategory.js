@@ -38,7 +38,7 @@ const ModalDeletePostCategory = ({
     } catch (err) {
       console.log(err);
       setToast(
-        "An unexpected error happened occurred while deleting post category",
+        "An unexpected error occurred while deleting post category",
         false
       );
     }

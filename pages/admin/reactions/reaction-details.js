@@ -11,6 +11,7 @@ import useModal from "../../../components/admin/hooks/useModal";
 import { Spinner } from "flowbite-react";
 import Form from "../../../components/admin/form";
 import { useToast } from "../../../components/admin/providers/toastProvider";
+import { useData } from "../../../components/admin/providers/dataProvider";
 
 const ReactionDetails = () => {
   const [reaction, setReaction] = useState(null);
@@ -24,6 +25,7 @@ const ReactionDetails = () => {
 
   const { setToast } = useToast();
   const { toRefetch, refetch, refetchReset } = useRefetch();
+  const { reactionCategories, setReactionCategories } = useData();
 
   useEffect(() => {
     if (toRefetch) {
@@ -47,8 +49,9 @@ const ReactionDetails = () => {
       setDataLoading(true);
       const res = await fetch(`/api/admin/reactions/${reactionId}`);
       if (res.status === 200) {
-        const reaction = await res.json();
+        const { reaction, reactionCategories } = await res.json();
         setReaction(reaction);
+        setReactionCategories(reactionCategories);
         editReactionModalHook.setData(reaction);
         deleteReactionModalHook.setData(reaction);
         setDataLoading(false);
@@ -98,18 +101,20 @@ const ReactionDetails = () => {
       >
         <HiTrash className="w-full h-full" />
       </button>
-      <button
-        onClick={editReactionModalHook.toggleOpen}
-        className="w-6 h-6 dark:text-blue-500 dark:hover:text-blue-600 tooltip-edit"
-      >
-        <HiPencilAlt className="w-full h-full" />
-      </button>
+      {reactionCategories && (
+        <button
+          onClick={editReactionModalHook.toggleOpen}
+          className="w-6 h-6 dark:text-blue-500 dark:hover:text-blue-600 tooltip-edit"
+        >
+          <HiPencilAlt className="w-full h-full" />
+        </button>
+      )}
     </>
   );
 
   return (
     <Layout active={"Reactions"}>
-      {editReactionModalHook.data && (
+      {reactionCategories && editReactionModalHook.data && (
         <ModalEditReaction
           reaction={editReactionModalHook.data}
           isOpen={editReactionModalHook.isOpen}

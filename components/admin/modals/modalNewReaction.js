@@ -17,7 +17,7 @@ import ModalLookupTable from "./modalLookupTable";
 const ModalNewReaction = ({ isOpen, toggleOpen, refetchName }) => {
   const { setToast } = useToast();
   const { refetch } = useRefetch();
-  const { additionalData } = useData();
+  const { reactionCategories } = useData();
 
   const usersTableModalHook = useModal();
   const postsTableModalHook = useModal();
@@ -273,8 +273,8 @@ const ModalNewReaction = ({ isOpen, toggleOpen, refetchName }) => {
                 <option value="" disabled>
                   Category
                 </option>
-                {additionalData?.reactionCategories &&
-                  additionalData?.reactionCategories.map((category, id) => (
+                {reactionCategories &&
+                  reactionCategories.map((category, id) => (
                     <option
                       key={id}
                       value={category._id.toString()}

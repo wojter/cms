@@ -41,7 +41,7 @@ const ModalDeleteReactionCategory = ({
     } catch (err) {
       console.log(err);
       setToast(
-        "An unexpected error happened occurred while deleting reaction category",
+        "An unexpected error occurred while deleting reaction category",
         false
       );
     }

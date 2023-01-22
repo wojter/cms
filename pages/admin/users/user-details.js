@@ -12,6 +12,7 @@ import { Spinner } from "flowbite-react";
 import Form from "../../../components/admin/form";
 import { useToast } from "../../../components/admin/providers/toastProvider";
 import PostsTable from "../../../components/admin/tables/postsTable";
+import ImagesTable from "../../../components/admin/tables/imagesTable";
 import CommentsTable from "../../../components/admin/tables/commentsTable";
 import ReactionsTable from "../../../components/admin/tables/reactionsTable";
 import TabsNoRedirect from "../../../components/admin/tabsNoRedirect";
@@ -134,7 +135,7 @@ const UserDetails = () => {
       )}
 
       <TabsNoRedirect
-        titles={["Posts", "Comments", "Reactions"]}
+        titles={["Posts", "Comments", "Reactions", "Images"]}
         elements={[
           <PostsTable
             title="Posts"
@@ -148,6 +149,11 @@ const UserDetails = () => {
           />,
           <ReactionsTable
             title="Reactions"
+            otherUrlOptions={`&filter=user_id:${userId}`}
+            columnsToOmit={["user"]}
+          />,
+          <ImagesTable
+            title="Images"
             otherUrlOptions={`&filter=user_id:${userId}`}
             columnsToOmit={["user"]}
           />,
