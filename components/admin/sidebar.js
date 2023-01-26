@@ -1,6 +1,4 @@
-import { createElement } from "react";
 import { Sidebar as SidebarFL } from "flowbite-react";
-import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import {
   HiChartPie,
@@ -9,8 +7,8 @@ import {
   HiUser,
   HiChatAlt,
   HiThumbUp,
-  HiCog,
   HiDocumentText,
+  HiPhotograph,
 } from "react-icons/hi";
 
 // const SidebarLink = ({ href, icon, children }) => {
@@ -103,17 +101,17 @@ const Sidebar = ({ active }) => {
             >
               Reactions
             </SidebarFL.Item>
+            <SidebarFL.Item
+              onClick={handleClick}
+              href="/admin/images"
+              icon={HiPhotograph}
+              active={active === "Images"}
+            >
+              Images
+            </SidebarFL.Item>
           </SidebarFL.ItemGroup>
 
           <SidebarFL.ItemGroup>
-            <SidebarFL.Item
-              onClick={handleClick}
-              href="/admin/settings"
-              icon={HiCog}
-              active={active === "Settings"}
-            >
-              Settings
-            </SidebarFL.Item>
             <SidebarFL.Item
               href="/api/logout?role=admin&redirect=admin"
               icon={HiLogout}

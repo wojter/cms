@@ -5,6 +5,7 @@ import Searchbar from "./searchbar";
 import TableCell from "./tableCell";
 import { useToast } from "./providers/toastProvider";
 import { useRefetch } from "./providers/refetchProvider";
+import { useData } from "./providers/dataProvider";
 
 const Table = ({
   title,
@@ -15,6 +16,8 @@ const Table = ({
   dataMapper,
   topButtons,
   actionButtons,
+  links = null,
+  otherUrlOptions = null,
 }) => {
   const [data, setData] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
@@ -24,13 +27,23 @@ const Table = ({
     limit: 8,
   });
   const [searchTerm, setSearchTerm] = useState("");
+  const [totalDocumentNumber, setTotalDocumentNumber] = useState(null);
 
   const { setToast } = useToast();
   const { toRefetch, refetch, refetchReset } = useRefetch();
+  const { setPostCategories, setReactionCategories } = useData();
 
   useEffect(() => {
     if (toRefetch) {
-      if (toRefetch === "users") {
+      if (
+        toRefetch === "users" ||
+        toRefetch === "posts" ||
+        toRefetch === "posts/categories" ||
+        toRefetch === "comments" ||
+        toRefetch === "reactions" ||
+        toRefetch === "reactions/categories" ||
+        toRefetch === "images"
+      ) {
         fetchData();
         refetchReset();
       }
@@ -45,16 +58,39 @@ const Table = ({
     try {
       setDataLoading(true);
       let url = "";
-
+      let doSendAdditionalData = false;
+      if (apiPath === "posts" || apiPath === "reactions") {
+        doSendAdditionalData = true;
+      }
       if (searchTerm) {
         url = `/api/admin/${apiPath}?search=${searchTerm}&page=${pagination.currentPage}&limit=${pagination.limit}`;
       } else {
         url = `/api/admin/${apiPath}?page=${pagination.currentPage}&limit=${pagination.limit}`;
       }
+      if (doSendAdditionalData) {
+        url += `&additional_data=${apiPath}`;
+      }
+      if (otherUrlOptions) {
+        url += otherUrlOptions;
+      }
       const res = await fetch(url);
       if (res.status === 200) {
-        const { documents, currentPage, totalPages } = await res.json();
+        const {
+          documents,
+          currentPage,
+          totalPages,
+          totalDocumentNumber,
+          postCategories,
+          reactionCategories,
+        } = await res.json();
         setData(documents);
+        if (postCategories) {
+          setPostCategories(postCategories);
+        }
+        if (reactionCategories) {
+          setReactionCategories(reactionCategories);
+        }
+        setTotalDocumentNumber(totalDocumentNumber);
         setPagination({
           ...pagination,
           currentPage,
@@ -85,9 +121,14 @@ const Table = ({
   return (
     <>
       <div className="flex flex-row justify-between items-end h-10">
-        <p className="text-4xl">{title}</p>
+        <div className="flex flex-row gap-2 items-end">
+          <p className="text-4xl">{title}</p>
+          {(totalDocumentNumber || totalDocumentNumber === 0) && (
+            <p className="text-gray-500 text-xl">({totalDocumentNumber})</p>
+          )}
+        </div>
         <div className="flex flex-row items-center gap-4">
-          {topButtons()}
+          {topButtons && topButtons()}
           <Searchbar
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -137,11 +178,14 @@ const Table = ({
                       key={idd}
                       text={cell}
                       type={headerTypes[idd]}
-                      id={idd}
+                      links={links}
+                      rowRaw={data[id]}
                     />
                   ))}
-                  <TableFL.Cell className="flex flex-row justify-end gap-4">
-                    {actionButtons(data[id])}
+                  <TableFL.Cell>
+                    <div className="flex flex-row justify-end gap-4">
+                      {actionButtons && actionButtons(data[id])}
+                    </div>
                   </TableFL.Cell>
                 </TableFL.Row>
               ))}

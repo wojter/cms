@@ -9,6 +9,15 @@ const ReactionCategorySchema = new mongoose.Schema({
       100,
       "Reaction category length cannot be more than 100 characters",
     ],
+    index: true,
+  },
+  created: {
+    type: Date,
+    required: true,
+  },
+  modified: {
+    type: Date,
+    required: true,
   },
 });
 

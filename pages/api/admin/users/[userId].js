@@ -1,4 +1,7 @@
 import User from "../../../../models/User";
+import Post from "../../../../models/Post";
+import Comment from "../../../../models/Comment";
+import Reaction from "../../../../models/Reaction";
 import dbConnect from "../../../../lib/db-connect";
 import { isAdminAuthenticated } from "../../../../lib/auth";
 import mongoose from "mongoose";
@@ -31,6 +34,23 @@ export default async function user(req, res) {
             "Cannot delete admin account. Change 'is_admin' property first."
           );
       }
+
+      let userPosts = await Post.find({ user_id: user._id })
+        .select("user_id")
+        .lean();
+
+      userPosts = userPosts.map((post) => post._id);
+
+      await Comment.deleteMany({
+        $or: [{ user_id: user._id }, { post_id: { $in: userPosts } }],
+      });
+
+      await Reaction.deleteMany({
+        $or: [{ user_id: user._id }, { post_id: { $in: userPosts } }],
+      });
+
+      await Post.deleteMany({ _id: { $in: userPosts } });
+
       await User.deleteOne({ _id: user._id });
       return res.status(200).end();
     } else {
