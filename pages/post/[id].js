@@ -7,11 +7,20 @@ import parse from "html-react-parser";
 import dayjs from "dayjs";
 import Navbar from "../../components/front/navbar";
 import Footer from "../../components/front/footer";
+import { getPostComments } from "../../lib/front/comments";
+import Comments from "../../components/front/comments";
+
+
 
 const Post = (props) => {
   const post = props.res[0];
+  const comments = props.comments;
 
   const imageProps = { src: "/sample_photo.jpeg" };
+
+  const returnComments = () => {
+    console.log(comments);
+  }
 
   return (
     <>
@@ -76,6 +85,9 @@ const Post = (props) => {
           </div>
         </article>
       </Container>
+      <Container>
+        <Comments comments={comments}/>
+      </Container>
       <Footer />
     </>
   );
@@ -98,8 +110,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const res = await getPost(params);
-
+  const comments = await getPostComments(params);
   return {
-    props: { res },
+    props: { res, comments },
   };
 }
