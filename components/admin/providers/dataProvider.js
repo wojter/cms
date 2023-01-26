@@ -12,10 +12,13 @@ export const useData = () => {
 };
 
 function useProvideData() {
-  const [additionalData, setAdditionalData] = useState(null);
+  const [postCategories, setPostCategories] = useState(null);
+  const [reactionCategories, setReactionCategories] = useState(null);
 
   return {
-    additionalData,
-    setAdditionalData,
+    postCategories,
+    setPostCategories,
+    reactionCategories,
+    setReactionCategories,
   };
 }

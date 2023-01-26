@@ -35,6 +35,13 @@ const Placeholder = () => {
         <p className="dark:group-hover:bg-orange-900"></p>
         <p className="text-orange-200"></p>
       </div>
+      <div className="yellow">
+        <p className="dark:bg-yellow-700"></p>
+        <p className="dark:hover:bg-yellow-800"></p>
+        <p className="dark:bg-yellow-800"></p>
+        <p className="dark:group-hover:bg-yellow-900"></p>
+        <p className="text-yellow-200"></p>
+      </div>
     </>
   );
 };

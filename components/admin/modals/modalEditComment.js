@@ -19,7 +19,6 @@ import { HiInformationCircle, HiTable, HiX } from "react-icons/hi";
 const ModalEditComment = ({ comment, isOpen, toggleOpen, refetchName }) => {
   const { setToast } = useToast();
   const { refetch } = useRefetch();
-  const { additionalData } = useData();
 
   const usersTableModalHook = useModal();
   const postsTableModalHook = useModal();
@@ -94,10 +93,7 @@ const ModalEditComment = ({ comment, isOpen, toggleOpen, refetchName }) => {
       }
     } catch (err) {
       console.log(err);
-      setToast(
-        "An unexpected error happened occurred while updating comment",
-        false
-      );
+      setToast("An unexpected error occurred while updating comment", false);
     }
   };
 

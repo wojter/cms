@@ -2,7 +2,7 @@ import Comment from "../../../../models/Comment";
 import Post from "../../../../models/Post";
 import User from "../../../../models/User";
 import dbConnect from "../../../../lib/db-connect";
-import { getDocsWithPagination } from "../../../../lib/api-helpers/get-docs-with-pagination";
+import { getDocsWithPagination } from "../../../../lib/get-docs-with-pagination";
 import { isAdminAuthenticated } from "../../../../lib/auth";
 
 export default async function comments(req, res) {

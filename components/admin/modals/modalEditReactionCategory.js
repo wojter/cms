@@ -39,7 +39,7 @@ const ModalEditReactionCategory = ({
     } catch (err) {
       console.log(err);
       setToast(
-        "An unexpected error happened occurred while updating reaction category",
+        "An unexpected error occurred while updating reaction category",
         false
       );
     }

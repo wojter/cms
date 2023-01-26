@@ -32,10 +32,7 @@ const ModalDeletePost = ({ post, isOpen, toggleOpen, refetchName }) => {
       }
     } catch (err) {
       console.log(err);
-      setToast(
-        "An unexpected error happened occurred while deleting post",
-        false
-      );
+      setToast("An unexpected error occurred while deleting post", false);
     }
   };
   return (

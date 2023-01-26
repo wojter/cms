@@ -19,7 +19,7 @@ import { HiInformationCircle, HiTable, HiX } from "react-icons/hi";
 const ModalEditPost = ({ post, isOpen, toggleOpen, refetchName }) => {
   const { setToast } = useToast();
   const { refetch } = useRefetch();
-  const { additionalData } = useData();
+  const { postCategories } = useData();
 
   const usersTableModalHook = useModal();
   const userDetailsModalHook = useModal();
@@ -73,10 +73,7 @@ const ModalEditPost = ({ post, isOpen, toggleOpen, refetchName }) => {
       }
     } catch (err) {
       console.log(err);
-      setToast(
-        "An unexpected error happened occurred while updating post",
-        false
-      );
+      setToast("An unexpected error occurred while updating post", false);
     }
   };
 
@@ -110,8 +107,8 @@ const ModalEditPost = ({ post, isOpen, toggleOpen, refetchName }) => {
   };
 
   let values = [];
-  if (additionalData?.postCategories) {
-    values = additionalData.postCategories
+  if (postCategories) {
+    values = postCategories
       .filter((cat) => cat._id !== post.category_id._id)
       .map((category) => [category._id, category.name]);
     values = [[post.category_id._id, post.category_id.name], ...values];
@@ -198,22 +195,19 @@ const ModalEditPost = ({ post, isOpen, toggleOpen, refetchName }) => {
                 </div>
 
                 <Label htmlFor="category_id" value="Category" />
-                {additionalData?.postCategories && (
-                  <>
-                    <select
-                      name="category_id"
-                      id="category_id"
-                      required
-                      className="bg-gray-700 rounded-lg border-gray-600 text-sm text-white "
-                    >
-                      {values.map(([value, text], id) => (
-                        <option key={id} value={value}>
-                          {text}
-                        </option>
-                      ))}
-                    </select>
-                  </>
-                )}
+                <select
+                  name="category_id"
+                  id="category_id"
+                  required
+                  className="bg-gray-700 rounded-lg border-gray-600 text-sm text-white "
+                >
+                  {values &&
+                    values.map(([value, text], id) => (
+                      <option key={id} value={value}>
+                        {text}
+                      </option>
+                    ))}
+                </select>
 
                 <Label htmlFor="created" value="Created" />
                 <TextInput

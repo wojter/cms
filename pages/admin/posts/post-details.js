@@ -2,18 +2,20 @@ import Breadcrumb from "../../../components/admin/breadcrumb";
 import Layout from "../../../components/admin/layout";
 import { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
-import { HiPencilAlt, HiTrash } from "react-icons/hi";
+import { HiPencilAlt, HiPlus, HiTrash } from "react-icons/hi";
 import Title from "../../../components/admin/title";
 import ModalEditPost from "../../../components/admin/modals/modalEditPost";
 import ModalDeletePost from "../../../components/admin/modals/modalDeletePost";
 import { useRefetch } from "../../../components/admin/providers/refetchProvider";
 import useModal from "../../../components/admin/hooks/useModal";
-import { Spinner } from "flowbite-react";
+import { Button, Spinner } from "flowbite-react";
 import Form from "../../../components/admin/form";
 import { useToast } from "../../../components/admin/providers/toastProvider";
 import TabsNoRedirect from "../../../components/admin/tabsNoRedirect";
 import CommentsTable from "../../../components/admin/tables/commentsTable";
 import ReactionsTable from "../../../components/admin/tables/reactionsTable";
+import { useData } from "../../../components/admin/providers/dataProvider";
+import ModalEditPostContent from "../../../components/admin/modals/modalEditPostContent";
 
 const PostDetails = () => {
   const [post, setPost] = useState(null);
@@ -24,9 +26,11 @@ const PostDetails = () => {
 
   const editPostModalHook = useModal();
   const deletePostModalHook = useModal();
+  const editPostContentModalHook = useModal();
 
   const { setToast } = useToast();
   const { toRefetch, refetch, refetchReset } = useRefetch();
+  const { postCategories, setPostCategories } = useData();
 
   useEffect(() => {
     if (toRefetch) {
@@ -50,10 +54,12 @@ const PostDetails = () => {
       setDataLoading(true);
       const res = await fetch(`/api/admin/posts/${postId}`);
       if (res.status === 200) {
-        const post = await res.json();
+        const { post, postCategories } = await res.json();
         setPost(post);
+        setPostCategories(postCategories);
         editPostModalHook.setData(post);
         deletePostModalHook.setData(post);
+        editPostContentModalHook.setData(post);
         setDataLoading(false);
       } else {
         setDataLoading(false);
@@ -75,7 +81,7 @@ const PostDetails = () => {
     ["Title", "title", "string"],
     ["Created", "created", "date"],
     ["Last modified", "modified", "date"],
-    ["Body", "body", "string"],
+    ["Body", "body", "post_body"],
   ];
 
   const links = {
@@ -99,18 +105,37 @@ const PostDetails = () => {
       >
         <HiTrash className="w-full h-full" />
       </button>
+      {postCategories && (
+        <button
+          onClick={editPostModalHook.toggleOpen}
+          className="w-6 h-6 dark:text-blue-500 dark:hover:text-blue-600 tooltip-edit"
+        >
+          <HiPencilAlt className="w-full h-full" />
+        </button>
+      )}
       <button
-        onClick={editPostModalHook.toggleOpen}
-        className="w-6 h-6 dark:text-blue-500 dark:hover:text-blue-600 tooltip-edit"
+        className="whitespace-nowrap bg-purple-600 flex flex-row gap-2 items-center px-4 py-2 rounded-lg hover:bg-purple-700"
+        onClick={() => {
+          editPostContentModalHook.toggleOpen();
+        }}
       >
-        <HiPencilAlt className="w-full h-full" />
+        <HiPlus className="w-5 h-5" />
+        Edit Post Content
       </button>
     </>
   );
 
   return (
     <Layout active={"Posts"}>
-      {editPostModalHook.data && (
+      {editPostContentModalHook.data && (
+        <ModalEditPostContent
+          post={editPostContentModalHook.data}
+          isOpen={editPostContentModalHook.isOpen}
+          toggleOpen={editPostContentModalHook.toggleOpen}
+          refetchName="post"
+        />
+      )}
+      {postCategories && editPostModalHook.data && (
         <ModalEditPost
           post={editPostModalHook.data}
           isOpen={editPostModalHook.isOpen}
@@ -144,22 +169,23 @@ const PostDetails = () => {
       ) : (
         <Form formData={formData} object={post} links={links} />
       )}
-
-      <TabsNoRedirect
-        titles={["Comments", "Reactions"]}
-        elements={[
-          <CommentsTable
-            title="Comments"
-            otherUrlOptions={`&filter=post_id:${postId}`}
-            columnsToOmit={["post"]}
-          />,
-          <ReactionsTable
-            title="Reactions"
-            otherUrlOptions={`&filter=post_id:${postId}`}
-            columnsToOmit={["post"]}
-          />,
-        ]}
-      />
+      {postId && (
+        <TabsNoRedirect
+          titles={["Comments", "Reactions"]}
+          elements={[
+            <CommentsTable
+              title="Comments"
+              otherUrlOptions={`&filter=post_id:${postId}`}
+              columnsToOmit={["post"]}
+            />,
+            <ReactionsTable
+              title="Reactions"
+              otherUrlOptions={`&filter=post_id:${postId}`}
+              columnsToOmit={["post"]}
+            />,
+          ]}
+        />
+      )}
     </Layout>
   );
 };

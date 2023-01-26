@@ -32,10 +32,7 @@ const ModalDeleteComment = ({ comment, isOpen, toggleOpen, refetchName }) => {
       }
     } catch (err) {
       console.log(err);
-      setToast(
-        "An unexpected error happened occurred while deleting comment",
-        false
-      );
+      setToast("An unexpected error occurred while deleting comment", false);
     }
   };
   return (

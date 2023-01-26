@@ -31,7 +31,7 @@ const Table = ({
 
   const { setToast } = useToast();
   const { toRefetch, refetch, refetchReset } = useRefetch();
-  const { additionalData, setAdditionalData } = useData();
+  const { setPostCategories, setReactionCategories } = useData();
 
   useEffect(() => {
     if (toRefetch) {
@@ -41,7 +41,8 @@ const Table = ({
         toRefetch === "posts/categories" ||
         toRefetch === "comments" ||
         toRefetch === "reactions" ||
-        toRefetch === "reactions/categories"
+        toRefetch === "reactions/categories" ||
+        toRefetch === "images"
       ) {
         fetchData();
         refetchReset();
@@ -78,11 +79,17 @@ const Table = ({
           documents,
           currentPage,
           totalPages,
-          additionalData,
           totalDocumentNumber,
+          postCategories,
+          reactionCategories,
         } = await res.json();
         setData(documents);
-        setAdditionalData(additionalData);
+        if (postCategories) {
+          setPostCategories(postCategories);
+        }
+        if (reactionCategories) {
+          setReactionCategories(reactionCategories);
+        }
         setTotalDocumentNumber(totalDocumentNumber);
         setPagination({
           ...pagination,
@@ -116,7 +123,7 @@ const Table = ({
       <div className="flex flex-row justify-between items-end h-10">
         <div className="flex flex-row gap-2 items-end">
           <p className="text-4xl">{title}</p>
-          {totalDocumentNumber && (
+          {(totalDocumentNumber || totalDocumentNumber === 0) && (
             <p className="text-gray-500 text-xl">({totalDocumentNumber})</p>
           )}
         </div>
@@ -175,8 +182,10 @@ const Table = ({
                       rowRaw={data[id]}
                     />
                   ))}
-                  <TableFL.Cell className="flex flex-row justify-end gap-4">
-                    {actionButtons && actionButtons(data[id])}
+                  <TableFL.Cell>
+                    <div className="flex flex-row justify-end gap-4">
+                      {actionButtons && actionButtons(data[id])}
+                    </div>
                   </TableFL.Cell>
                 </TableFL.Row>
               ))}

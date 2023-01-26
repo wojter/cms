@@ -29,7 +29,6 @@ const LookupTable = ({
 
   const { setToast } = useToast();
   const { toRefetch, refetch, refetchReset } = useRefetch();
-  // const { additionalData, setAdditionalData } = useData();
 
   useEffect(() => {
     if (toRefetch) {
@@ -48,24 +47,17 @@ const LookupTable = ({
     try {
       setDataLoading(true);
       let url = "";
-      // let doSendAdditionalData = false;
-      // if (apiPath === "posts") {
-      //   doSendAdditionalData = true;
-      // }
+
       if (searchTerm) {
         url = `/api/admin/${apiPath}?search=${searchTerm}&page=${pagination.currentPage}&limit=${pagination.limit}`;
       } else {
         url = `/api/admin/${apiPath}?page=${pagination.currentPage}&limit=${pagination.limit}`;
       }
-      // if (doSendAdditionalData) {
-      //   url += "&additional_data=true";
-      // }
+
       const res = await fetch(url);
       if (res.status === 200) {
-        const { documents, currentPage, totalPages, additionalData } =
-          await res.json();
+        const { documents, currentPage, totalPages } = await res.json();
         setData(documents);
-        // setAdditionalData(additionalData);
         setPagination({
           ...pagination,
           currentPage,

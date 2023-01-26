@@ -17,7 +17,7 @@ import ModalLookupTable from "./modalLookupTable";
 const ModalNewPost = ({ isOpen, toggleOpen, refetchName }) => {
   const { setToast } = useToast();
   const { refetch } = useRefetch();
-  const { additionalData } = useData();
+  const { postCategories } = useData();
 
   const usersTableModalHook = useModal();
   const userDetailsModalHook = useModal();
@@ -179,8 +179,8 @@ const ModalNewPost = ({ isOpen, toggleOpen, refetchName }) => {
                 <option value="" disabled>
                   Category
                 </option>
-                {additionalData?.postCategories &&
-                  additionalData?.postCategories.map((category, id) => (
+                {postCategories &&
+                  postCategories.map((category, id) => (
                     <option
                       key={id}
                       value={category._id.toString()}

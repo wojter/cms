@@ -18,11 +18,6 @@ const Title = ({ text, returnPath, buttons }) => {
       >
         <HiOutlineReply className="w-full h-full" />
       </button>
-      {/* <Link href={returnPath}>
-        <a className="text-white w-8 hover:text-gray-300">
-          <HiOutlineReply className="w-full h-full" />
-        </a>
-      </Link> */}
     </div>
   );
 };
