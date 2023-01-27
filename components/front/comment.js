@@ -1,19 +1,22 @@
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 const Comment = (props) => {
+  dayjs.extend(relativeTime);
+
   return (
-    <div className="flex flex-row pt-1 md-10 md:ml-16">
+    <div className="flex flex-row pt-1 md-10 md:ml-1 bg-slate-300 mx-3 my-2 rounded-md pb-3">
       <div className="flex-col mt-1">
         <div className="flex items-center flex-1 px-4 font-bold leading-tight">
           {props.comment.author}
           <span className="ml-2 text-xs font-normal text-gray-500">
-            {dayjs(props.comment.created).format("DD MM YYYY  HH:mm")}
+            {dayjs(props.comment.created).fromNow()}
           </span>
         </div>
-        <div className="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
+        <div className="flex-1 px-2 ml-8 text-sm font-medium leading-loose text-gray-600">
           {props?.comment?.body}
         </div>
-        <button className="inline-flex items-center px-1 pt-2 ml-1 flex-column">
+        {/* <button className="inline-flex items-center px-1 pt-2 ml-1 flex-column">
           <svg
             className="w-5 h-5 ml-2 text-gray-600 cursor-pointer fill-current hover:text-gray-900"
             viewBox="0 0 95 78"
@@ -34,7 +37,7 @@ const Comment = (props) => {
           >
             <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
           </svg>
-        </button>
+        </button> */}
       </div>
     </div>
   );
