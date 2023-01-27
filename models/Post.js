@@ -31,6 +31,9 @@ const PostSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  thumbnail_url: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.models.Post || mongoose.model("Post", PostSchema);

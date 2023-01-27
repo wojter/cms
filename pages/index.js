@@ -3,6 +3,7 @@ import Navbar from "../components/front/navbar";
 import PostList from "../components/front/postlist";
 import Container from "../components/front/container";
 import { getPosts } from "../lib/front/load-posts";
+import { isAuthenticated } from "../lib/auth";
 
 const Main = (props) => {
 
