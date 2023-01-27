@@ -5,8 +5,10 @@ const Comment = (props) => {
   dayjs.extend(relativeTime);
 
   return (
-    <div className="flex flex-row pt-1 md-10 md:ml-1 bg-slate-300 mx-3 my-2 rounded-md pb-3">
-      <div className="flex-col mt-1">
+    <div className="flex flex-row pt-2 pl-2 md-10 md:ml-1 bg-slate-200 mx-3 my-2 rounded-md pb-3">
+      <img src="/no-profile-picture.svg" width="10%" height="10%" />
+
+      <div className="flex-col mt-1 ml-1">
         <div className="flex items-center flex-1 px-4 font-bold leading-tight">
           {props.comment.author}
           <span className="ml-2 text-xs font-normal text-gray-500">

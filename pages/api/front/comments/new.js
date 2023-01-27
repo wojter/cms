@@ -1,21 +1,19 @@
 import Comment from "../../../../models/Comment";
 import dbConnect from "../../../../lib/db-connect";
-import { isAdminAuthenticated } from "../../../../lib/auth";
+import { isAuthenticated } from "../../../../lib/auth";
 import mongoose from "mongoose";
 
 export default async function newComment(req, res) {
   try {
     await dbConnect();
-    if (!(await isAdminAuthenticated(req, res))) {
+    if (!(await isAuthenticated(req, res))) {
       return res.status(401).end("Unauthorized");
     }
     const date_now = Date.now();
     const new_comment = new Comment({
       user_id: req.body.user_id,
       post_id: req.body.post_id,
-      title: req.body.title,
       body: req.body.body,
-      category_id: mongoose.Types.ObjectId(req.body.category_id),
       created: date_now,
       modified: date_now,
     });

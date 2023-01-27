@@ -13,9 +13,7 @@ export default async function newComment(req, res) {
     const new_comment = new Comment({
       user_id: req.body.user_id,
       post_id: req.body.post_id,
-      title: req.body.title,
       body: req.body.body,
-      category_id: mongoose.Types.ObjectId(req.body.category_id),
       created: date_now,
       modified: date_now,
     });

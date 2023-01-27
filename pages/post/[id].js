@@ -9,12 +9,13 @@ import Navbar from "../../components/front/navbar";
 import Footer from "../../components/front/footer";
 import { getPostComments } from "../../lib/front/comments";
 import Comments from "../../components/front/comments";
+import { useUser } from "../../lib/hooks";
 
 const Post = (props) => {
   const post = props.res[0];
   const comments = props.comments;
 
-  const imageProps = { src: "/sample_photo.jpeg" };
+  const user = useUser();
 
   const returnComments = () => {
     console.log(comments);
@@ -73,7 +74,12 @@ const Post = (props) => {
         </article>
       </Container>
       <Container>
-        <Comments comments={comments} />
+        <Comments
+          comments={comments}
+          isLoggedIn={user ? true : false}
+          user_id={user?._id}
+          post_id={post._id}
+        />
       </Container>
       <Footer />
     </>
