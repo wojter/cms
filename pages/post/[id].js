@@ -27,7 +27,7 @@ const Post = (props) => {
       <Navbar />
       <Container className="!pt-0">
         <div className="max-w-screen-md mx-auto ">
-          <div className="text-center">
+          <div className="flex text-center justify-center">
             <CategoryLabel category={post?.category} />
           </div>
 
