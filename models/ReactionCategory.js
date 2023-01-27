@@ -11,6 +11,10 @@ const ReactionCategorySchema = new mongoose.Schema({
     ],
     index: true,
   },
+  emoji: {
+    type: String,
+    required: true,
+  },
   created: {
     type: Date,
     required: true,
