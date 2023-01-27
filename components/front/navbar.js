@@ -13,6 +13,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { getDisplayName } from "next/dist/shared/lib/utils";
 import { useUser } from "../../lib/hooks";
+import { useData } from "../admin/providers/postCategoriesProvider";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -24,15 +25,15 @@ export default function Navbar() {
     { name: "technology" },
   ]);
 
+  const { postCategories, setPostCategories, getPostCategories } = useData();
+
   useEffect(() => {
-    console.log(getCategories());
+    getPostCategories();
   }, []);
 
-  async function getCategories() {
-    const data = await getPostCategories();
-    // console.log(data);
-    return data;
-  }
+  useEffect(() => {
+    console.log("postCategories", postCategories);
+  }, [postCategories]);
 
   const menu = [
     {
@@ -62,20 +63,9 @@ export default function Navbar() {
   return (
     <Container>
       <Disclosure as="nav">
-        {/* {({ open }) => ( */}
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
-              {/* <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div> */}
               <div className="flex flex-1 items-center justify-center align-middle md:justify-start">
                 <div className="flex flex-shrink-0 items-center ">
                   <Link href="/">
@@ -109,6 +99,7 @@ export default function Navbar() {
                           <Menu
                             as="div"
                             className="relative inline-block text-left"
+                            key={item.name}
                           >
                             <div>
                               <Menu.Button
@@ -127,73 +118,11 @@ export default function Navbar() {
                               className="absolute right-0 mt-0 w-32 z-50 origin-top-left divide-y divide-gray-100 
                               rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             >
-                              {/* <NavbarCategories /> */}
-                              {/* <div className="px-1 py-1">
-                                  {categories.map((item) => 
-                                    <Menu.Item key={item.name} as="div">
-                                      <Link
-                                        href={`/postcategory?id=${item.name}`}
-                                        key={item.name}
-                                      >
-                                        <a
-                                          className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-500 px-5 py-2 
-                                        rounded-md text-sm font-medium capitalize"
-                                        >
-                                          {item.name}
-                                        </a>
-                                      </Link>
-                                    </Menu.Item>
-                                  )}
-                                  
-                                </div>*/}
-                              <NavbarCategories cattegories={categories} />
+                              {postCategories && (
+                                <NavbarCategories categories={postCategories} />
+                              )}
                             </Menu.Items>
                           </Menu>
-                          // <div className="flex">
-                          //   <Dropdown
-                          //     className="text-gray-600 dark:text-gray-400 hover:text-blue-500 px-5 py-2 rounded-md text-sm font-medium"
-                          //     arrowIcon={false}
-                          //     inline={true}
-                          //     label="Categories"
-                          //   >
-                          //   </Dropdown>
-                          // </div>
-                          // <Disclosure as="div" className="">
-                          //   {({ open }) => (
-                          //     <>
-                          //       <Disclosure.Button className="text-gray-600 dark:text-gray-400 hover:text-blue-500 px-5 py-2 rounded-md text-sm font-medium">
-                          //         Categories
-                          //         {/* <svg
-                          //           xmlns="http://www.w3.org/2000/svg"
-                          //           fill="none"
-                          //           viewBox="0 0 24 24"
-                          //           stroke-width="1.5"
-                          //           stroke="currentColor"
-                          //           class="w-6 h-6"
-                          //         >
-                          //           <path
-                          //             stroke-linecap="round"
-                          //             stroke-linejoin="round"
-                          //             d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                          //           />
-                          //         </svg> */}
-                          //         {/* className={`${
-                          //             open ? "rotate-180 transform" : ""
-                          //           } h-5 w-5 text-purple-500`} */}
-                          //       </Disclosure.Button>
-                          //       <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                          //         <Suspense fallback={<p>Loading...</p>}>
-                          //           <NavbarCategories />
-                          //         </Suspense>
-                          //       </Disclosure.Panel>
-                          //     </>
-                          //   )}
-                          // // </Disclosure>
-                          // <Link href={item.href} key={item.name}>
-                          //   <a className="text-gray-600 dark:text-gray-400 hover:text-blue-500 px-5 py-2 rounded-md text-sm font-medium">
-                          //     {item.name}
-                          //   </a>
-                          // </Link>
                         );
                       } else {
                         return (

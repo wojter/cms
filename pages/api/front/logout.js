@@ -11,6 +11,6 @@ export default async function logout(req, res) {
   }
   const isAdmin = role === "admin";
   removeTokenCookie(res, isAdmin);
-  res.writeHead(302, { Location: redirectPath ? `/${redirectPath}` : "/test" });
+  res.writeHead(302, { Location: redirectPath ? `/${redirectPath}` : "/" });
   res.end();
 }

@@ -4,7 +4,7 @@ import { useUser } from "../lib/hooks";
 import Navbar from "../components/front/navbar";
 import Footer from "../components/front/footer";
 import Container from "../components/front/container";
-import LoginForm from "../components/admin/loginForm";
+import LoginForm from "../components/front/loginForm";
 
 const Login = () => {
   useUser({ redirectTo: "/", redirectIfFound: true, isAdmin: false });
