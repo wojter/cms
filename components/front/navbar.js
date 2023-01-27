@@ -139,9 +139,16 @@ export default function Navbar() {
                 <div className="flex ml-auto">
                   {user ? (
                     <Link href="/api/front/logout?role=user">
-                      <button className="text-gray-600 dark:text-gray-400 hover:text-blue-500 px-5 py-2 rounded-md text-sm font-medium">
-                        Logout
-                      </button>
+                      <div className="flex justify-end">
+                        <button className="text-gray-600 dark:text-gray-400 hover:text-blue-500 px-5 py-2 rounded-md text-sm font-medium">
+                          Logout
+                        </button>
+                        <img
+                          src="no-profile-picture.svg"
+                          width="10%"
+                          height="10%"
+                        />
+                      </div>
                     </Link>
                   ) : (
                     <Link href="/login">

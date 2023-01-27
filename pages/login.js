@@ -5,11 +5,14 @@ import Navbar from "../components/front/navbar";
 import Footer from "../components/front/footer";
 import Container from "../components/front/container";
 import LoginForm from "../components/front/loginForm";
+import { useToast } from "../components/admin/providers/toastProvider";
 
 const Login = () => {
   useUser({ redirectTo: "/", redirectIfFound: true, isAdmin: false });
 
   const [errorMsg, setErrorMsg] = useState("");
+
+  const {setToast, hideToast } = useToast();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,6 +32,9 @@ const Login = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
+        // setToast("Succesfull logged in");
+        // setTimeout('', 5000);
+        // hideToast();
         Router.push("/");
       } else {
         throw new Error(await res.text());
@@ -41,11 +47,11 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <Container>
-        <div className="h-screen grid place-items-center bg-gradient-to-tr from-slate-100 dark:from-gray-800 dark:to-black">
+      {/* <Container> */}
+        <div className="h-screen grid items-start justify-items-center bg-gradient-to-tr  dark:from-gray-800 dark:to-black">
           <LoginForm onSubmit={handleSubmit} errorMessage={errorMsg} />
         </div>
-      </Container>
+      {/* </Container> */}
       <Footer />
     </>
   );

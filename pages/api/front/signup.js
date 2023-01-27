@@ -1,5 +1,5 @@
-import { createUser } from "../../lib/user";
-import dbConnect from "../../lib/db-connect";
+import { createUser } from "../../../lib/user";
+import dbConnect from "../../../lib/db-connect";
 
 export default async function signup(req, res) {
   await dbConnect();
