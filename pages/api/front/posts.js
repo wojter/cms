@@ -41,6 +41,7 @@ export default async function postsCategories(req, res) {
             created: 1,
             author: 1,
             category: 1,
+            thumbnail_url: 1,
         }
       }
     ]);

@@ -15,21 +15,8 @@ const PostList = ({ post, aspect, preloadImage }) => {
         >
           <Link href={`/post/${post._id}`}>
             <a>
-              {imageProps ? (
-                <Image
-                  src={imageProps.src}
-                  //   loader={imageProps.loader}
-                  //   blurDataURL={imageProps.blurDataURL}
-                  //   alt={post.mainImage.alt || "Thumbnail"}
-                  alt={"Thumbnail"}
-                  //   placeholder="blur"
-                  sizes="80vw"
-                  //sizes="(max-width: 640px) 90vw, 480px"
-                  layout="fill"
-                  objectFit="cover"
-                  priority={preloadImage ? true : false}
-                  className="transition-all"
-                />
+              {post.thumbnail_url ? (
+                <img src={post.thumbnail_url} />
               ) : (
                 <span className="absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                   <PhotographIcon />
@@ -61,10 +48,8 @@ const PostList = ({ post, aspect, preloadImage }) => {
           <span className="text-xs text-gray-300 dark:text-gray-600">
             &bull;
           </span>
-          <time
-            className="text-sm"
-            dateTime={post?.created}
-          >{dayjs(post?.created).format("DD/MM/YYYY")}
+          <time className="text-sm" dateTime={post?.created}>
+            {dayjs(post?.created).format("DD/MM/YYYY")}
           </time>
         </div>
       </div>

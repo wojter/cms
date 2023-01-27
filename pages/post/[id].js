@@ -10,8 +10,6 @@ import Footer from "../../components/front/footer";
 import { getPostComments } from "../../lib/front/comments";
 import Comments from "../../components/front/comments";
 
-
-
 const Post = (props) => {
   const post = props.res[0];
   const comments = props.comments;
@@ -20,7 +18,7 @@ const Post = (props) => {
 
   const returnComments = () => {
     console.log(comments);
-  }
+  };
 
   return (
     <>
@@ -57,18 +55,7 @@ const Post = (props) => {
       </Container>
 
       <div className="relative z-0 max-w-screen-lg mx-auto overflow-hidden lg:rounded-lg aspect-video">
-        {imageProps && (
-          <Image
-            src={imageProps.src}
-            loader={imageProps.loader}
-            // blurDataURL={imageProps.blurDataURL}
-            alt={post?.mainImage?.alt || "Thumbnail"}
-            // placeholder="blur"
-            layout="fill"
-            loading="eager"
-            objectFit="cover"
-          />
-        )}
+        {post.thumbnail_url && <img src={post.thumbnail_url} />}
       </div>
 
       <Container>
@@ -86,7 +73,7 @@ const Post = (props) => {
         </article>
       </Container>
       <Container>
-        <Comments comments={comments}/>
+        <Comments comments={comments} />
       </Container>
       <Footer />
     </>
