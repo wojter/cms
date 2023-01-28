@@ -143,9 +143,7 @@ const Post = (props) => {
             false
           );
         }
-      }
-      else
-      {
+      } else {
         try {
           const res = await fetch("/api/front/reactions/update", {
             method: "POST",
@@ -167,18 +165,12 @@ const Post = (props) => {
           }
         } catch (error) {
           console.log(error);
-          setToast(
-            "An unexpected error occurred while updating",
-            false
-          );
+          setToast("An unexpected error occurred while updating", false);
         }
       }
     } catch (error) {
       console.log(error);
-      setToast(
-        "An unexpected error occurred while finding reaction",
-        false
-      );
+      setToast("An unexpected error occurred while finding reaction", false);
     }
   };
 
@@ -253,46 +245,34 @@ const Post = (props) => {
         </article>
         {/* {userReacted()} */}
       </Container>
-      {user ? (
-        <PostReaction
-          isReactionOpen={isReactionOpen}
-          reactions={reactionsList}
-          onSelect={handleSelectEmoji}
-          onClick={openModal}
-          reacted={reacted}
-          selectedReaction={selectedReaction}
-        />
-      ) : (
-        <Link href="/login">
-          <a>Login to react</a>
-        </Link>
-      )}
-
-      {/* <ReactionCounter
-        reactions={[
-          { node: <div>🤢</div>, label: "angry", key: "angry" },
-          { key: "like", label: "like", node: <div>👍</div>, by: "wojtek" },
-          { label: "like" },
-          { node: <div>😷</div>, label: "sad", key: "sad", name: "mariusz" },
-        ]}
-        showTotalOnly={false}
-        showReactsOnly={false}
-      /> */}
-      <div className="flex">
-        {postReactions.map((p) => {
-          return (
-            <p>
-              {p.node}
-              {p.count}
-            </p>
-          );
-        })}
-        {postReactions.length ==0 && <p>Be first person to react</p>}
-      </div>
 
       {/* <FacebookCounter />
       <FacebookCounterReaction alwaysShowOthers /> */}
+
       <Container>
+        <div className="mt-[-50px] ml-12 mb-12">
+          <PostReaction
+            isReactionOpen={isReactionOpen}
+            reactions={reactionsList}
+            onSelect={handleSelectEmoji}
+            onClick={openModal}
+            reacted={reacted}
+            selectedReaction={selectedReaction}
+            isLoggedIn={user ? true : false}
+          />
+
+          <div className="flex">
+            {postReactions.map((p) => {
+              return (
+                <p>
+                  {p.node}
+                  {p.count}
+                </p>
+              );
+            })}
+            {postReactions.length == 0 && <p>Be first person to react</p>}
+          </div>
+        </div>
         <Comments
           comments={comments}
           isLoggedIn={user ? true : false}
