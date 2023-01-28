@@ -20,7 +20,7 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true,
     minLength: [5, "Body length cannot be less than 5 characters"],
-    maxLength: [2000, "Body length cannot be more than 2000 characters"],
+    maxLength: [50000, "Body length cannot be more than 2000 characters"],
     index: true,
   },
   created: {
