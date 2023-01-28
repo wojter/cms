@@ -6,10 +6,10 @@ import { ObjectID } from "bson";
 
 export default async function updateReaction(req, res) {
   try {
-    // await dbConnect();
-    // if (!(await isAuthenticated(req, res))) {
-    //   return res.status(401).end("Unauthorized");
-    // }
+    await dbConnect();
+    if (!(await isAuthenticated(req, res))) {
+      return res.status(401).end("Unauthorized");
+    }
 
     const body = req.body;
     const reactionId = body.category_id;

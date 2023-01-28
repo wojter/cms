@@ -10,9 +10,9 @@ import { ObjectID } from "bson";
 export default async function reactions(req, res) {
   try {
     await dbConnect();
-    // if (!(await isAuthenticated(req, res))) {
-    //   return res.status(401).end("Unauthorized");
-    // }
+    if (!(await isAuthenticated(req, res))) {
+      return res.status(401).end("Unauthorized");
+    }
    
     const body = req.body;
     console.log(body)
