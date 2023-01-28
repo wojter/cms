@@ -3,9 +3,6 @@ import { Disclosure } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
 import logoImg from "../../public/logo_sample.png";
-// import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { getPostCategories } from "../../lib/front/load-posts";
-import { Fragment, Suspense, useEffect } from "react";
 import { useEffect } from "react";
 import NavbarCategories from "./navbar_categories";
 import { Menu } from "@headlessui/react";
@@ -31,7 +28,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    console.log("postCategories", postCategories);
+    // console.log("postCategories", postCategories);
   }, [postCategories]);
 
   const menu = [
