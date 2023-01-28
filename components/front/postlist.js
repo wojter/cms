@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PhotographIcon } from "@heroicons/react/outline";
+// import { PhotographIcon } from "@heroicons/react/outline";
 import CategoryLabel from "./catogory";
 import dayjs from "dayjs";
 
@@ -19,7 +19,7 @@ const PostList = ({ post, aspect, preloadImage }) => {
                 <img src={post.thumbnail_url} />
               ) : (
                 <span className="absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                  <PhotographIcon />
+                  {/* <PhotographIcon /> */}XX
                 </span>
               )}
             </a>

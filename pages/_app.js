@@ -11,7 +11,9 @@ function MyApp({ Component, pageProps }) {
       <RefetchProvider>
         <DataProvider>
           <PostCategoriesProvider>
+            <ThemeProvider>
             <Component {...pageProps} />
+            </ThemeProvider>
           </PostCategoriesProvider>
         </DataProvider>
       </RefetchProvider>

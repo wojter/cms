@@ -55,7 +55,7 @@ const ReactionsTable = ({
         reaction._id,
         reaction.user_id?.email,
         reaction.post_id?.title,
-        reaction.category_id?.name,
+        reaction.category_id?.node,
         reaction.created,
         reaction.modified,
       ].filter(filterColumns),

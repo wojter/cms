@@ -23,7 +23,7 @@ const ReactionCategoriesTable = ({
   const editReactionCategoryModalHook = useModal();
   const deleteReactionCategoryModalHook = useModal();
 
-  const headers = ["id", "name", "created", "modified"];
+  const headers = ["id", "name", "emoji", "created", "modified"];
 
   const getColumnsIdsToOmit = () => {
     if (Array.isArray(columnsToOmit)) {
@@ -43,11 +43,12 @@ const ReactionCategoriesTable = ({
     apiPath: "reactions/categories",
     otherUrlOptions: otherUrlOptions ?? "",
     headers: headers.filter(filterColumns),
-    headerTypes: ["string", "string", "date", "date"].filter(filterColumns),
+    headerTypes: ["string", "string", "string", "date", "date"].filter(filterColumns),
     dataMapper: (reactionCategory) =>
       [
         reactionCategory._id,
         reactionCategory.name,
+        reactionCategory.node,
         reactionCategory.created,
         reactionCategory.modified,
       ].filter(filterColumns),
