@@ -1,9 +1,5 @@
 import Reaction from "../../../../models/Reaction";
-import Post from "../../../../models/Post";
-import User from "../../../../models/User";
-import ReactionCategory from "../../../../models/ReactionCategory";
 import dbConnect from "../../../../lib/db-connect";
-import { getDocsWithPagination } from "../../../../lib/get-docs-with-pagination";
 import { isAuthenticated } from "../../../../lib/auth";
 import { ObjectID } from "bson";
 

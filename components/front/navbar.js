@@ -3,15 +3,11 @@ import { Disclosure } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
 import logoImg from "../../public/logo_sample.png";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { getPostCategories } from "../../lib/front/load-posts";
-import { Fragment, Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import NavbarCategories from "./navbar_categories";
-import { Dropdown } from "flowbite-react";
 import { Menu } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import { getDisplayName } from "next/dist/shared/lib/utils";
 import { useUser } from "../../lib/hooks";
 import { useData } from "../admin/providers/postCategoriesProvider";
 

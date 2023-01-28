@@ -1,6 +1,5 @@
 import Container from "../../components/front/container";
 import CategoryLabel from "../../components/front/catogory";
-import Image from "next/image";
 import Link from "next/link";
 import { getPostsIDs, getPost } from "../../lib/front/load-posts";
 import parse from "html-react-parser";
@@ -15,16 +14,8 @@ import {
 } from "../../lib/front/comments";
 import Comments from "../../components/front/comments";
 import { useUser } from "../../lib/hooks";
-import {
-  ReactionBarSelector,
-  ReactionCounter,
-  GithubCounter,
-  FacebookCounterReaction,
-  FacebookCounter,
-} from "@charkour/react-reactions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useToast } from "../../components/admin/providers/toastProvider";
-import { set } from "mongoose";
 import PostReaction from "../../components/front/postreaction";
 
 const Post = (props) => {
@@ -90,10 +81,6 @@ const Post = (props) => {
 
   const { setToast } = useToast();
 
-  let reactttt = postReactions.find((e) => e == user?._id);
-  const returnComments = () => {
-    // console.log(comments);
-  };
   const handleSelectEmoji = async (e) => {
     try {
       const category_id = reactionsList.find((r) => r.key == e).category_id;
@@ -243,12 +230,7 @@ const Post = (props) => {
             </Link>
           </div>
         </article>
-        {/* {userReacted()} */}
       </Container>
-
-      {/* <FacebookCounter />
-      <FacebookCounterReaction alwaysShowOthers /> */}
-
       <Container>
         <div className="mt-[-50px] ml-12 mb-12">
           <PostReaction
