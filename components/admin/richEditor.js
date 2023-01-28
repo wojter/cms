@@ -3,9 +3,11 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { useState, useEffect } from "react";
 import { HiPhotograph } from "react-icons/hi";
 import ModalImagesGrid from "./modals/modalImagesGrid";
+import ModalThumbnail from "./modals/modalThumbnail";
 import useModal from "./hooks/useModal";
 import { useToast } from "./providers/toastProvider";
 import { useRefetch } from "./providers/refetchProvider";
+import { Button, Label, TextInput } from "flowbite-react";
 
 class MyUploadAdapter {
   constructor(loader, user_id) {
@@ -65,13 +67,17 @@ class MyUploadAdapter {
 const RichEditor = ({ post, wrapperToggleOpen }) => {
 
   const [value, setValue] = useState("");
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
   const imagesGridModalHook = useModal();
+  const thumbnailModalHook = useModal();
   const { setToast } = useToast();
   const { refetch } = useRefetch();
 
   useEffect(() => {
     if (post) {
       fetchUserImages();
+      setValue(post.body)
+      setThumbnailUrl(post.thumbnail_url);
     }
   }, []);
 
@@ -99,8 +105,8 @@ const RichEditor = ({ post, wrapperToggleOpen }) => {
       const body = {
         id: post._id.toString(),
         body: value,
+        thumbnail_url: thumbnailUrl,
       };
-      console.log(body.body);
       const res = await fetch("/api/admin/posts/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -131,6 +137,15 @@ const RichEditor = ({ post, wrapperToggleOpen }) => {
           toggleOpen={imagesGridModalHook.toggleOpen}
           getUrlAndQuit={getUrlAndQuit}
         />
+        
+      )}
+      {thumbnailUrl && (
+
+        <ModalThumbnail
+        isOpen={thumbnailModalHook.isOpen}
+        toggleOpen={thumbnailModalHook.toggleOpen}
+        url={thumbnailUrl}
+        />
       )}
       <div className="flex flex-row justify-between">
         <div
@@ -142,6 +157,7 @@ const RichEditor = ({ post, wrapperToggleOpen }) => {
           </div>
           <p className="whitespace-nowrap">User's images</p>
         </div>
+        
         <button
           type="button"
           className="bg-green-500 text-white px-4 py-1 rounded-xl hover:bg-green-600"
@@ -150,37 +166,59 @@ const RichEditor = ({ post, wrapperToggleOpen }) => {
           Save
         </button>
       </div>
-      <CKEditor
-        editor={Editor}
-        data={post.body}
-        onReady={(editor) => {
+      <div className="flex flex-col gap-2">
 
-          editor.plugins.get("FileRepository").createUploadAdapter = (
-            loader
-          ) => {
-            return new MyUploadAdapter(loader, post.user_id._id.toString());
-          };
+        <div className="flex flex-row gap-2 items-center ">
+          <Label htmlFor="url" value="Thumbnail Url" className="whitespace-nowrap"/>
+          <TextInput
+            id="url"
+            name="url"
+            placeholder="Thumbnail Url"
+            type="text"
+            required={true}
+            value={thumbnailUrl}
+            onChange={(e) => setThumbnailUrl(e.target.value)}
+            className="w-full"
+          />
+          <Button className="whitespace-nowrap" onClick={thumbnailModalHook.toggleOpen}>
+            Show Thumbnail
+          </Button>
+        </div> 
 
-          editor.editing.view.change((writer) => {
-            writer.setStyle(
-              "height",
-              "500px",
-              editor.editing.view.document.getRoot()
-            );
-          });
-        }}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          setValue(data);
-          // console.log({ event, editor, data });
-        }}
-        onBlur={(event, editor) => {
-          // console.log("Blur.", editor);
-        }}
-        onFocus={(event, editor) => {
-          // console.log("Focus.", editor);
-        }}
-      />
+
+        <CKEditor
+          editor={Editor}
+          data={post.body}
+          onReady={(editor) => {
+
+            editor.plugins.get("FileRepository").createUploadAdapter = (
+              loader
+            ) => {
+              return new MyUploadAdapter(loader, post.user_id._id.toString());
+            };
+
+            editor.editing.view.change((writer) => {
+              writer.setStyle(
+                "height",
+                "500px",
+                editor.editing.view.document.getRoot()
+              );
+            });
+          }}
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            setValue(data);
+            // console.log({ event, editor, data });
+          }}
+          onBlur={(event, editor) => {
+            // console.log("Blur.", editor);
+          }}
+          onFocus={(event, editor) => {
+            // console.log("Focus.", editor);
+          }}
+        />
+      </div>
+
     </div>
   );
 };
