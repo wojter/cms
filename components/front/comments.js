@@ -96,7 +96,7 @@ const Comments = (props) => {
             </p>
           </div>
         )}
-      {console.log("comments", comments)}
+      {/* {console.log("comments", comments)} */}
         {comments && comments.map((com) => (
           <Comment key={com._id} comment={com} />
         ))}

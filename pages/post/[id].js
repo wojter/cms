@@ -7,19 +7,198 @@ import parse from "html-react-parser";
 import dayjs from "dayjs";
 import Navbar from "../../components/front/navbar";
 import Footer from "../../components/front/footer";
-import { getPostComments } from "../../lib/front/comments";
+import {
+  getPostComments,
+  getPostReactions,
+  getReactionCategories,
+  getUserReactions,
+} from "../../lib/front/comments";
 import Comments from "../../components/front/comments";
 import { useUser } from "../../lib/hooks";
+import {
+  ReactionBarSelector,
+  ReactionCounter,
+  GithubCounter,
+  FacebookCounterReaction,
+  FacebookCounter,
+} from "@charkour/react-reactions";
+import { useEffect, useState } from "react";
+import { useToast } from "../../components/admin/providers/toastProvider";
+import { set } from "mongoose";
+import PostReaction from "../../components/front/postreaction";
 
 const Post = (props) => {
   const post = props.res[0];
   const comments = props.comments;
-
+  // const postReactions = props.postReactions;
   const user = useUser();
 
-  const returnComments = () => {
-    console.log(comments);
+  const userReacted = () => {
+    if (user) {
+      props.userReacted.map((r) => {
+        if (r.user_id == user._id) {
+          console.log("user reacted");
+          // setReacted(true);
+          // setSelectedReaction(r.node);
+          return true;
+        } else {
+          console.log("user not reacted");
+          // setReacted(false);
+          // setSelectedReaction("");
+          return false;
+        }
+      });
+    } else {
+      console.log("user unlogged");
+      // setReacted(false);
+      // setSelectedReaction("");
+      return false;
+    }
   };
+
+  // useEffect((
+  //   setReacted(userReacted())
+  // ),[user])
+
+  const [isReactionOpen, setIsReactionOpen] = useState(false);
+  const [selectedReaction, setSelectedReaction] = useState("");
+  const [reacted, setReacted] = useState("");
+  const [postReactions, setPostReactions] = useState(props.postReactions);
+
+  function closeModal() {
+    setIsReactionOpen(false);
+  }
+
+  function openModal() {
+    setIsReactionOpen(true);
+  }
+
+  // if (user) {
+  //   const res = await fetch(`/api/front/userreaction/${user._id}`);
+  //   const data = await res.json();
+  //   data.map((m) => {
+  //     if (m.post_id == post._id) {
+  //       console.log("tak")
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   });
+  // } else {
+  //   return false;
+  // }
+
+  const { setToast } = useToast();
+
+  let reactttt = postReactions.find((e) => e == user?._id);
+  const returnComments = () => {
+    // console.log(comments);
+  };
+  const handleSelectEmoji = async (e) => {
+    try {
+      const category_id = reactionsList.find((r) => r.key == e).category_id;
+      const body = {
+        user_id: user._id,
+        post_id: post._id,
+        category_id: category_id,
+      };
+
+      const res = await fetch("/api/front/reactions/find", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!body.user_id) {
+        setToast("Please provide user id", false);
+        return;
+      }
+      if (!body.post_id) {
+        setToast("Please provide post id", false);
+        return;
+      }
+      if ((await res.json()) == []) {
+        try {
+          const res2 = await fetch("/api/front/reactions/new", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          if (res2.status === 200) {
+            setToast("New comment created successfully");
+            const res = await fetch(`/api/front/reactions/${post._id}`);
+            setPostReactions(await res.json());
+            setReacted(true);
+            setSelectedReaction(reactionsList.find((el) => el.key == e).node);
+            closeModal();
+          } else if (res2.status === 400) {
+            const msg = await res.text();
+            setToast(msg, false);
+          } else {
+            throw new Error(await res2.text());
+          }
+        } catch (error) {
+          console.log(error);
+          setToast(
+            "An unexpected error occurred while creating new comment",
+            false
+          );
+        }
+      }
+      else
+      {
+        try {
+          const res = await fetch("/api/front/reactions/update", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          if (res.status === 200) {
+            setToast("Reaction updated");
+            const res = await fetch(`/api/front/reactions/${post._id}`);
+            setPostReactions(await res.json());
+            setReacted(true);
+            setSelectedReaction(reactionsList.find((el) => el.key == e).node);
+            closeModal();
+          } else if (res.status === 400) {
+            const msg = await res.text();
+            setToast(msg, false);
+          } else {
+            throw new Error(await res.text());
+          }
+        } catch (error) {
+          console.log(error);
+          setToast(
+            "An unexpected error occurred while updating",
+            false
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setToast(
+        "An unexpected error occurred while finding reaction",
+        false
+      );
+    }
+  };
+
+  let reactionsList = props.reactionCategories.map((cat) => {
+    const container = {};
+    container.category_id = cat._id;
+    container.node = cat.node;
+    container.key = cat.name;
+    container.label = cat.name;
+    return container;
+  });
+
+  // let reactions = [
+  //   { node: <div>👍</div>, label: "like", key: "like" },
+  //   { node: <div>❤️</div>, label: "love", key: "love" },
+  //   { node: <div>😀</div>, label: "haha", key: "haha" },
+  //   { node: <div>😴</div>, label: "wow", key: "wow" },
+  //   { node: <div>😷</div>, label: "sad", key: "sad" },
+  //   { node: <div>🤢</div>, label: "angry", key: "angry" },
+  // ];
 
   return (
     <>
@@ -72,7 +251,47 @@ const Post = (props) => {
             </Link>
           </div>
         </article>
+        {/* {userReacted()} */}
       </Container>
+      {user ? (
+        <PostReaction
+          isReactionOpen={isReactionOpen}
+          reactions={reactionsList}
+          onSelect={handleSelectEmoji}
+          onClick={openModal}
+          reacted={reacted}
+          selectedReaction={selectedReaction}
+        />
+      ) : (
+        <Link href="/login">
+          <a>Login to react</a>
+        </Link>
+      )}
+
+      {/* <ReactionCounter
+        reactions={[
+          { node: <div>🤢</div>, label: "angry", key: "angry" },
+          { key: "like", label: "like", node: <div>👍</div>, by: "wojtek" },
+          { label: "like" },
+          { node: <div>😷</div>, label: "sad", key: "sad", name: "mariusz" },
+        ]}
+        showTotalOnly={false}
+        showReactsOnly={false}
+      /> */}
+      <div className="flex">
+        {postReactions.map((p) => {
+          return (
+            <p>
+              {p.node}
+              {p.count}
+            </p>
+          );
+        })}
+        {postReactions.length ==0 && <p>Be first person to react</p>}
+      </div>
+
+      {/* <FacebookCounter />
+      <FacebookCounterReaction alwaysShowOthers /> */}
       <Container>
         <Comments
           comments={comments}
@@ -104,7 +323,10 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const res = await getPost(params);
   const comments = await getPostComments(params);
+  const reactionCategories = await getReactionCategories();
+  const postReactions = await getPostReactions(params);
+  const userReacted = await getUserReactions(params);
   return {
-    props: { res, comments },
+    props: { res, comments, reactionCategories, postReactions, userReacted },
   };
 }
