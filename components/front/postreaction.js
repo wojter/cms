@@ -30,7 +30,7 @@ const PostReaction = (props) => {
                 </p>
               </div>
             ) : (
-              <div className="border-5  border-slate-600 bg-slate-50 rounded-md flex p-2 border-solid hover:bg-slate-200">
+              <div className=" border-slate-600 bg-slate-50 rounded-md flex p-2 border-solid hover:bg-slate-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

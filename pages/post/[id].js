@@ -103,7 +103,9 @@ const Post = (props) => {
         setToast("Please provide post id", false);
         return;
       }
-      if ((await res.json()) == []) {
+      const data = await res.json()
+      console.log("find response", data)
+      if (data.length == 0) {
         try {
           const res2 = await fetch("/api/front/reactions/new", {
             method: "POST",
