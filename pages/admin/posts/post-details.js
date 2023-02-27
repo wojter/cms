@@ -177,11 +177,13 @@ const PostDetails = () => {
               title="Comments"
               otherUrlOptions={`&filter=post_id:${postId}`}
               columnsToOmit={["post"]}
+              key={postId}
             />,
             <ReactionsTable
               title="Reactions"
               otherUrlOptions={`&filter=post_id:${postId}`}
               columnsToOmit={["post"]}
+              key={postId}
             />,
           ]}
         />

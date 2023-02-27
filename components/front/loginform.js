@@ -1,5 +1,6 @@
 import { Button, Label, TextInput } from "flowbite-react";
 import React, { useState } from "react";
+import Link from "next/link";
 
 const LoginForm = ({ errorMessage, onSubmit }) => {
   return (
@@ -54,12 +55,11 @@ const LoginForm = ({ errorMessage, onSubmit }) => {
               <Button type="submit">Sign In</Button>
             </div>
           </div>
-          <a
-            href="/signup"
-            className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-          >
-            Don't have an account yet? Sign Up
-          </a>
+          <Link href="/signup">
+            <a className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+              Don&#39;t have an account yet? Sign Up
+            </a>
+          </Link>
         </form>
       </div>
     </div>

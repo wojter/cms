@@ -20,7 +20,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <a href="/api/logout?role=user">Logout</a>
+                <Link href="/api/logout?role=user"><a>Logout</a></Link>
               </li>
             </>
           ) : (

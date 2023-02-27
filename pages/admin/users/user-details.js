@@ -141,21 +141,25 @@ const UserDetails = () => {
             title="Posts"
             otherUrlOptions={`&filter=user_id:${userId}`}
             columnsToOmit={["user"]}
+            key={userId}
           />,
           <CommentsTable
             title="Comments"
             otherUrlOptions={`&filter=user_id:${userId}`}
             columnsToOmit={["user"]}
+            key={userId}
           />,
           <ReactionsTable
             title="Reactions"
             otherUrlOptions={`&filter=user_id:${userId}`}
             columnsToOmit={["user"]}
+            key={userId}
           />,
           <ImagesTable
             title="Images"
             otherUrlOptions={`&filter=user_id:${userId}`}
             columnsToOmit={["user"]}
+            key={userId}
           />,
         ]}
       />

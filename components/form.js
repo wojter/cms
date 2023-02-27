@@ -26,7 +26,7 @@ const Form = ({ isLogin, errorMessage, onSubmit }) => (
       {isLogin ? (
         <>
           <Link href="/test/signup" legacyBehavior>
-            <a>I don't have an account</a>
+            <a>I don&#39;t have an account</a>
           </Link>
           <button type="submit">Login</button>
         </>

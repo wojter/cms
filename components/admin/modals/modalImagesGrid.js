@@ -5,7 +5,7 @@ const ModalImagesGrid = ({ images, isOpen, toggleOpen, getUrlAndQuit }) => {
   return (
     <ModalFL show={isOpen} size="6xl" popup={true} onClose={toggleOpen}>
       <ModalFL.Header className="!text-xl !p-6 !pb-4">
-        User's Images
+        User&#39;s Images
       </ModalFL.Header>
       <ModalFL.Body className="text-white">
         <div className="flex flex-row flex-wrap gap-4 max-h-[600px] overflow-y-scroll">

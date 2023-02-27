@@ -248,7 +248,7 @@ const Post = (props) => {
           <div className="flex">
             {postReactions.map((p) => {
               return (
-                <p>
+                <p key={p.node}>
                   {p.node}
                   {p.count}
                 </p>

@@ -155,7 +155,7 @@ const RichEditor = ({ post, wrapperToggleOpen }) => {
           <div className="w-8">
             <HiPhotograph className="w-full h-full" />
           </div>
-          <p className="whitespace-nowrap">User's images</p>
+          <p className="whitespace-nowrap">User&#39;s images</p>
         </div>
         
         <button
