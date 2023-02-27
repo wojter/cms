@@ -3,7 +3,6 @@ import CategoryLabel from "../../components/front/catogory";
 import Link from "next/link";
 import { getPostsIDs, getPost } from "../../lib/front/load-posts_build";
 import parse from "html-react-parser";
-import dayjs from "dayjs";
 import Navbar from "../../components/front/navbar";
 import Footer from "../../components/front/footer";
 import {
@@ -17,6 +16,9 @@ import { useUser } from "../../lib/hooks";
 import { useState } from "react";
 import { useToast } from "../../components/admin/providers/toastProvider";
 import PostReaction from "../../components/front/postreaction";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 const Post = (props) => {
   const post = props.res[0];
@@ -205,7 +207,7 @@ const Post = (props) => {
                     className="text-gray-500 dark:text-gray-400"
                     dateTime={post?.created}
                   >
-                    {dayjs(post?.created).format("DD MMMM YYYY")}
+                    {dayjs.utc(post?.created).format("DD MMMM YYYY")}
                   </time>
                   <span>· {post?.estReadingTime || "5"} min read</span>
                 </div>

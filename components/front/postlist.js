@@ -3,9 +3,10 @@ import Link from "next/link";
 // import { PhotographIcon } from "@heroicons/react/outline";
 import CategoryLabel from "./catogory";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 const PostList = ({ post, aspect, preloadImage }) => {
-  const imageProps = { src: "/sample_photo.jpeg" };
   return (
     <>
       <div className="cursor-pointer group">
@@ -49,7 +50,7 @@ const PostList = ({ post, aspect, preloadImage }) => {
             &bull;
           </span>
           <time className="text-sm" dateTime={post?.created}>
-            {dayjs(post?.created).format("DD/MM/YYYY")}
+            {dayjs.utc(post?.created).format("DD/MM/YYYY")}
           </time>
         </div>
       </div>
