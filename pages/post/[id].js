@@ -1,7 +1,7 @@
 import Container from "../../components/front/container";
 import CategoryLabel from "../../components/front/catogory";
 import Link from "next/link";
-import { getPostsIDs, getPost } from "../../lib/front/load-posts";
+import { getPostsIDs, getPost } from "../../lib/front/load-posts_build";
 import parse from "html-react-parser";
 import dayjs from "dayjs";
 import Navbar from "../../components/front/navbar";
@@ -11,7 +11,7 @@ import {
   getPostReactions,
   getReactionCategories,
   getUserReactions,
-} from "../../lib/front/comments";
+} from "../../lib/front/comments_build";
 import Comments from "../../components/front/comments";
 import { useUser } from "../../lib/hooks";
 import { useState } from "react";
@@ -86,7 +86,7 @@ const Post = (props) => {
       const category_id = reactionsList.find((r) => r.key == e).category_id;
       const body = {
         user_id: user._id,
-        post_id: post._id,
+        post_id: post._id.toString(),
         category_id: category_id,
       };
 
@@ -216,7 +216,7 @@ const Post = (props) => {
       </Container>
 
       <div className="relative z-0 max-w-screen-lg mx-auto overflow-hidden lg:rounded-lg aspect-video">
-        {post.thumbnail_url && <img src={post.thumbnail_url} />}
+        {post?.thumbnail_url && <img src={post.thumbnail_url} />}
       </div>
 
       <Container>
@@ -275,7 +275,7 @@ export async function getStaticPaths() {
   const allPosts = await getPostsIDs();
 
   const paths = allPosts.map((post) => ({
-    params: { id: post._id },
+    params: { id: post._id.toString() },
   }));
 
   return {
@@ -290,6 +290,7 @@ export async function getStaticProps({ params }) {
   const reactionCategories = await getReactionCategories();
   const postReactions = await getPostReactions(params);
   const userReacted = await getUserReactions(params);
+  
   return {
     props: { res, comments, reactionCategories, postReactions, userReacted },
   };
