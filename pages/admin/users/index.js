@@ -10,5 +10,5 @@ const Users = () => {
     </Layout>
   );
 };
-
+Users.theme = 'dark'
 export default Users;

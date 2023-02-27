@@ -11,8 +11,11 @@ function MyApp({ Component, pageProps }) {
       <RefetchProvider>
         <DataProvider>
           <PostCategoriesProvider>
-            <ThemeProvider>
-            <Component {...pageProps} />
+            <ThemeProvider
+              attribute="class"
+              forcedTheme={Component.theme || null}
+            >
+              <Component {...pageProps} />
             </ThemeProvider>
           </PostCategoriesProvider>
         </DataProvider>

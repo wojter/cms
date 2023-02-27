@@ -10,5 +10,5 @@ const Images = () => {
     </Layout>
   );
 };
-
+Images.theme = 'dark'
 export default Images;

@@ -18,5 +18,5 @@ const Posts = () => {
     </Layout>
   );
 };
-
+Posts.theme = 'dark'
 export default Posts;

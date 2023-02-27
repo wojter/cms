@@ -132,5 +132,5 @@ const PostCategoryDetails = () => {
     </Layout>
   );
 };
-
+PostCategoryDetails.theme = 'dark'
 export default PostCategoryDetails;

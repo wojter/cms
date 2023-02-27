@@ -143,5 +143,5 @@ const CommentDetails = () => {
     </Layout>
   );
 };
-
+CommentDetails.theme = 'dark'
 export default CommentDetails;

@@ -280,5 +280,5 @@ const PublicContent = () => {
     </Layout>
   );
 };
-
+PublicContent.theme = 'dark'
 export default PublicContent;

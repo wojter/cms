@@ -154,5 +154,5 @@ const ReactionDetails = () => {
     </Layout>
   );
 };
-
+ReactionDetails.theme = 'dark'
 export default ReactionDetails;

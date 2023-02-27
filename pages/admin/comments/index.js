@@ -10,5 +10,5 @@ const Comments = () => {
     </Layout>
   );
 };
-
+Comments.theme = 'dark'
 export default Comments;

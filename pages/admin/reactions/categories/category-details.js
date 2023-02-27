@@ -134,5 +134,5 @@ const ReactionCategoryDetails = () => {
     </Layout>
   );
 };
-
+ReactionCategoryDetails.theme = 'dark'
 export default ReactionCategoryDetails;

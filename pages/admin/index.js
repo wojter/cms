@@ -86,5 +86,5 @@ const AdminHome = () => {
     </Layout>
   );
 };
-
+AdminHome.theme = 'dark'
 export default AdminHome;

@@ -18,5 +18,5 @@ const Reactions = () => {
     </Layout>
   );
 };
-
+Reactions.theme = 'dark'
 export default Reactions;

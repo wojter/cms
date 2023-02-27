@@ -23,5 +23,5 @@ const PostCategories = () => {
     </Layout>
   );
 };
-
+PostCategories.theme = 'dark'
 export default PostCategories;

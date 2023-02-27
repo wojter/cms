@@ -23,5 +23,5 @@ const ReactionCategories = () => {
     </Layout>
   );
 };
-
+ReactionCategories.theme = 'dark'
 export default ReactionCategories;

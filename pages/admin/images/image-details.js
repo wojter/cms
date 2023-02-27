@@ -144,5 +144,5 @@ const ImageDetails = () => {
     </Layout>
   );
 };
-
+ImageDetails.theme = 'dark'
 export default ImageDetails;

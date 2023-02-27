@@ -162,5 +162,5 @@ const UserDetails = () => {
     </Layout>
   );
 };
-
+UserDetails.theme = 'dark'
 export default UserDetails;

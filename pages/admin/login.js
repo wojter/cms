@@ -42,5 +42,5 @@ const Login = () => {
     </div>
   );
 };
-
+Login.theme = 'dark'
 export default Login;

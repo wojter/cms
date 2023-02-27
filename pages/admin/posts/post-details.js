@@ -189,5 +189,5 @@ const PostDetails = () => {
     </Layout>
   );
 };
-
+PostDetails.theme = 'dark'
 export default PostDetails;
