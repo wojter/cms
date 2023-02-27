@@ -4,7 +4,7 @@ import { useUser } from "../lib/hooks";
 import Navbar from "../components/front/navbar";
 import Footer from "../components/front/footer";
 import Container from "../components/front/container";
-import LoginForm from "../components/front/loginForm";
+import LoginForm from "../components/front/loginform";
 import { useToast } from "../components/admin/providers/toastProvider";
 
 const Login = () => {
