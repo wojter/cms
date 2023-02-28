@@ -2,7 +2,7 @@ import Footer from "../../components/front/footer";
 import Navbar from "../../components/front/navbar";
 import PostList from "../../components/front/postlist";
 import Container from "../../components/front/container";
-import { getPosts } from "../../lib/front/load-posts";
+import { getPosts } from "../../lib/front/load-posts_build";
 import { useRouter } from "next/router";
 
 const Main = (props) => {

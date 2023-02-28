@@ -2,12 +2,19 @@ import Footer from "../components/front/footer";
 import Navbar from "../components/front/navbar";
 import PostList from "../components/front/postlist";
 import Container from "../components/front/container";
-import { getPosts, getPublicContent } from "../lib/front/load-posts";
+import { getPosts, getPublicContent } from "../lib/front/load-posts_build";
 
 const Main = (props) => {
-  const posts = props.publicContent.front_page_posts_ids.map((e) => {
+  let posts = []
+  console.log('sitepuboic content', props.publicContent)
+  if (props.publicContent.front_page_posts_ids != []) {
+  posts = props.publicContent.front_page_posts_ids.map((e) => {
     return props.posts.find((p) => p._id == e);
-  });
+  })} else {
+    posts = props.posts;
+    console.log("all posts", posts)
+  }
+  
   return (
     <div>
       <Navbar />
